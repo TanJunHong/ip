@@ -59,7 +59,15 @@ public class Duke {
 
         String line = in.nextLine();
         while (!line.equals("bye")) {
-            duke.echo(line);
+            //duke.echo(line);
+            switch (line) {
+            case "list":
+                duke.list();
+                break;
+            default:
+                duke.add(line);
+                break;
+            }
             line = in.nextLine();
         }
 
