@@ -7,7 +7,7 @@ class Task {
         isDone = false;
     }
 
-    void markDone() {
+    void markAsDone() {
         this.isDone = true;
     }
 
