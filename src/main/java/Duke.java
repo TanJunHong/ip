@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
 public class Duke {
-    private String[] tasks;
+    private Task[] tasks;
     private int taskCount;
 
     public Duke() {
-        tasks = new String[100];
+        tasks = new Task[100];
         taskCount = 0;
     }
 
@@ -23,7 +23,7 @@ public class Duke {
     }
 
     private void add(String task) {
-        tasks[taskCount++] = task;
+        tasks[taskCount++] = new Task(task);
 
         System.out.println("____________________________________________________________");
         System.out.println("added: " + task);
@@ -38,8 +38,9 @@ public class Duke {
 
     private void list() {
         System.out.println("____________________________________________________________");
+        System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + ". " + tasks[i]);
+            System.out.println((i + 1) + ". [" + tasks[i].getStatusIcon() + "] " + tasks[i].getName());
         }
         System.out.println("____________________________________________________________");
     }
@@ -65,7 +66,17 @@ public class Duke {
                 duke.list();
                 break;
             default:
-                duke.add(line);
+                if (line.startsWith("done")) {
+                    int taskNumber = Integer.parseInt(line.split(" ")[1]);
+                    System.out.println("____________________________________________________________");
+                    duke.tasks[taskNumber - 1].markDone();
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println("[" + duke.tasks[taskNumber - 1].getStatusIcon() + "] " + duke.tasks[taskNumber - 1].getName());
+                    System.out.println("____________________________________________________________");
+                }
+                else {
+                    duke.add(line);
+                }
                 break;
             }
             line = in.nextLine();
