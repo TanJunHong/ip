@@ -1,20 +1,12 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+    private String[] tasks;
+    private int taskCount;
 
-        Duke duke = new Duke();
-
-        duke.greet();
-
-        String line = in.nextLine();
-        while (!line.equals("bye")) {
-            duke.echo(line);
-            line = in.nextLine();
-        }
-
-        duke.exit();
+    public Duke() {
+        tasks = new String[100];
+        taskCount = 0;
     }
 
     private void greet() {
@@ -40,5 +32,21 @@ public class Duke {
         System.out.println("____________________________________________________________");
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        Duke duke = new Duke();
+
+        duke.greet();
+
+        String line = in.nextLine();
+        while (!line.equals("bye")) {
+            duke.echo(line);
+            line = in.nextLine();
+        }
+
+        duke.exit();
     }
 }
