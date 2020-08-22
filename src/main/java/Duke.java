@@ -22,6 +22,14 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
+    private void add(String task) {
+        tasks[taskCount++] = task;
+
+        System.out.println("____________________________________________________________");
+        System.out.println("added: " + task);
+        System.out.println("____________________________________________________________");
+    }
+
     private void echo(String line) {
         System.out.println("____________________________________________________________");
         System.out.println(line);
