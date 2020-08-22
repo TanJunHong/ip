@@ -1,7 +1,19 @@
+import java.util.Scanner;
+
 public class Duke {
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
         Duke duke = new Duke();
+
         duke.greet();
+
+        String line = in.nextLine();
+        while (!line.equals("bye")) {
+            duke.echo(line);
+            line = in.nextLine();
+        }
+
         duke.exit();
     }
 
@@ -15,6 +27,12 @@ public class Duke {
         System.out.println(logo);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
+        System.out.println("____________________________________________________________");
+    }
+
+    private void echo(String line) {
+        System.out.println("____________________________________________________________");
+        System.out.println(line);
         System.out.println("____________________________________________________________");
     }
 
