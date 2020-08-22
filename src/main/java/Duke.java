@@ -7,7 +7,7 @@ public class Duke {
     public static void main(String[] args) {
         Duke duke = new Duke();
         duke.greet();
-        duke.bye();
+        duke.exit();
     }
 
     private void greet() {
@@ -18,7 +18,7 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    private void bye() {
+    private void exit() {
         System.out.println("____________________________________________________________");
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
