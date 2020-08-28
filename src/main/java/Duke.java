@@ -36,6 +36,42 @@ public class Duke {
         printDottedLine();
     }
 
+    private void addToDo(String toDoName) {
+        tasks[taskCount] = new Todo(toDoName);
+
+        printDottedLine();
+        System.out.println("Got it. I've added this task:");
+        System.out.println(tasks[taskCount]);
+        System.out.println("Now you have " + ++taskCount + " tasks in the list.");
+        printDottedLine();
+    }
+
+    private void addDeadline(String line) {
+        String[] instructions = line.split("/by");
+        String name = instructions[0];
+        String by = instructions[1];
+        tasks[taskCount] = new Deadline(name, by);
+
+        printDottedLine();
+        System.out.println("Got it. I've added this task:");
+        System.out.println(tasks[taskCount]);
+        System.out.println("Now you have " + ++taskCount + " tasks in the list.");
+        printDottedLine();
+    }
+
+    private void addEvent(String line) {
+        String[] instructions = line.split("/at");
+        String name = instructions[0];
+        String at = instructions[1];
+        tasks[taskCount] = new Event(name, at);
+
+        printDottedLine();
+        System.out.println("Got it. I've added this task:");
+        System.out.println(tasks[taskCount]);
+        System.out.println("Now you have " + ++taskCount + " tasks in the list.");
+        printDottedLine();
+    }
+
     private void echoUser(String line) {
         printDottedLine();
         System.out.println(line);
@@ -46,7 +82,7 @@ public class Duke {
         printDottedLine();
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + ". [" + tasks[i].getStatusIcon() + "] " + tasks[i].getName());
+            System.out.println((i + 1) + "." + tasks[i]);
         }
         printDottedLine();
     }
@@ -76,6 +112,15 @@ public class Duke {
         while (true) {
             String[] instructions = line.split(" ", 2);
             switch (instructions[0]) {
+            case "todo":
+                duke.addToDo(instructions[1]);
+                break;
+            case "deadline":
+                duke.addDeadline(instructions[1]);
+                break;
+            case "event":
+                duke.addEvent(instructions[1]);
+                break;
             case "list":
                 duke.listTasks();
                 break;
