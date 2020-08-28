@@ -20,4 +20,9 @@ class Task {
         return isDone ? "✓" : "✗";
     }
 
+    @Override
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + getName();
+    }
+
 }
