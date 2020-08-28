@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
+
     private final String LOGO = " ____        _        \n"
                             + "|  _ \\ _   _| | _____ \n"
                             + "| | | | | | | |/ / _ \\\n"
