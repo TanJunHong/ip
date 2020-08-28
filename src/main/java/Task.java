@@ -1,10 +1,10 @@
 class Task {
 
-    private String name;
+    private String description;
     private boolean isDone;
 
-    Task(String name) {
-        this.name = name;
+    Task(String description) {
+        this.description = description;
         isDone = false;
     }
 
@@ -12,8 +12,8 @@ class Task {
         this.isDone = true;
     }
 
-    String getName() {
-        return name;
+    String getDescription() {
+        return description;
     }
 
     String getStatusIcon() {
@@ -22,7 +22,7 @@ class Task {
 
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + getName();
+        return "[" + getStatusIcon() + "] " + getDescription();
     }
 
 }

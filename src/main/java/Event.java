@@ -2,8 +2,8 @@ class Event extends Task {
 
     private String at;
 
-    Event(String name, String at) {
-        super(name);
+    Event(String description, String at) {
+        super(description);
         this.at = at;
     }
 
