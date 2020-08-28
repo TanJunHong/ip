@@ -91,7 +91,7 @@ public class Duke {
         printDottedLine();
         tasks[taskNumber - 1].markAsDone();
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println("[" + tasks[taskNumber - 1].getStatusIcon() + "] " + tasks[taskNumber - 1].getName());
+        System.out.println(tasks[taskNumber - 1]);
         printDottedLine();
     }
 
