@@ -7,100 +7,100 @@ public class Duke {
                             + "| | | | | | | |/ / _ \\\n"
                             + "| |_| | |_| |   <  __/\n"
                             + "|____/ \\__,_|_|\\_\\___|\n";
-    private final String dottedLine = "____________________________________________________________";
+    private final String DOTTED_LINE = "____________________________________________________________";
+    private final int MAX_TASKS = 100;
 
     private Task[] tasks;
     private int taskCount;
 
     public Duke() {
-        tasks = new Task[100];
+        tasks = new Task[MAX_TASKS];
         taskCount = 0;
     }
 
     private void printWithIndent(String string) {
-
-        System.out.println("\t" + string.replaceAll("\n", "\n\t"));
+        String formattedString = string.replaceAll("\n", "\n\t");
+        System.out.println("\t" + formattedString);
     }
 
     private void greetUser() {
-        printWithIndent(dottedLine);
+        printWithIndent(DOTTED_LINE);
         printWithIndent(LOGO);
         printWithIndent(" Hello! I'm Duke");
         printWithIndent(" What can I do for you?");
-        printWithIndent(dottedLine);
+        printWithIndent(DOTTED_LINE);
     }
 
-    private void addTask(String taskName) {
-        tasks[taskCount] = new Task(taskName);
+    /*private void addTask(String description) {
+        tasks[taskCount] = new Task(description);
 
-        printWithIndent(dottedLine);
-        printWithIndent(" added: " + tasks[taskCount++].getName());
-        printWithIndent(dottedLine);
-    }
+        printWithIndent(DOTTED_LINE);
+        printWithIndent(" added: " + tasks[taskCount].getDescription());
+        printWithIndent(DOTTED_LINE);
 
-    private void addToDo(String toDoName) {
-        tasks[taskCount] = new Todo(toDoName);
+        taskCount++;
+    }*/
 
-        printWithIndent(dottedLine);
+    private void addTask(Task task) {
+        tasks[taskCount] = task;
+
+        printWithIndent(DOTTED_LINE);
         printWithIndent(" Got it. I've added this task:");
         printWithIndent("   " + tasks[taskCount].toString());
-        printWithIndent(" Now you have " + ++taskCount + " tasks in the list.");
-        printWithIndent(dottedLine);
+
+        taskCount++;
+        printWithIndent(" Now you have " + taskCount + " tasks in the list.");
+        printWithIndent(DOTTED_LINE);
+    }
+
+    private void addToDo(String description) {
+        addTask(new ToDo(description));
     }
 
     private void addDeadline(String line) {
         String[] instructions = line.split("/by");
-        String name = instructions[0];
+        String description = instructions[0];
         String by = instructions[1];
-        tasks[taskCount] = new Deadline(name, by);
 
-        printWithIndent(dottedLine);
-        printWithIndent(" Got it. I've added this task:");
-        printWithIndent("   " + tasks[taskCount].toString());
-        printWithIndent(" Now you have " + ++taskCount + " tasks in the list.");
-        printWithIndent(dottedLine);
+        addTask(new Deadline(description, by));
     }
 
     private void addEvent(String line) {
         String[] instructions = line.split("/at");
-        String name = instructions[0];
+        String description = instructions[0];
         String at = instructions[1];
-        tasks[taskCount] = new Event(name, at);
 
-        printWithIndent(dottedLine);
-        printWithIndent(" Got it. I've added this task:");
-        printWithIndent("   " + tasks[taskCount].toString());
-        printWithIndent(" Now you have " + ++taskCount + " tasks in the list.");
-        printWithIndent(dottedLine);
+        addTask(new Event(description, at));
     }
 
     private void echoUser(String line) {
-        printWithIndent(dottedLine);
+        printWithIndent(DOTTED_LINE);
         printWithIndent(line);
-        printWithIndent(dottedLine);
+        printWithIndent(DOTTED_LINE);
     }
 
     private void listTasks() {
-        printWithIndent(dottedLine);
+        printWithIndent(DOTTED_LINE);
         printWithIndent(" Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
             printWithIndent(" " + (i + 1) + "." + tasks[i]);
         }
-        printWithIndent(dottedLine);
+        printWithIndent(DOTTED_LINE);
     }
 
     private void markTaskAsDone(int taskNumber) {
-        printWithIndent(dottedLine);
         tasks[taskNumber - 1].markAsDone();
+
+        printWithIndent(DOTTED_LINE);
         printWithIndent(" Nice! I've marked this task as done:");
         printWithIndent("   " + tasks[taskNumber - 1].toString());
-        printWithIndent(dottedLine);
+        printWithIndent(DOTTED_LINE);
     }
 
     private void exit() {
-        printWithIndent(dottedLine);
+        printWithIndent(DOTTED_LINE);
         printWithIndent(" Bye. Hope to see you again soon!");
-        printWithIndent(dottedLine);
+        printWithIndent(DOTTED_LINE);
         System.exit(0);
     }
 
@@ -127,14 +127,15 @@ public class Duke {
                 duke.listTasks();
                 break;
             case "done":
-                duke.markTaskAsDone(Integer.parseInt(instructions[1]));
+                int taskNumber = Integer.parseInt(instructions[1]);
+                duke.markTaskAsDone(taskNumber);
                 break;
             case "bye":
                 duke.exit();
                 break;
             default:
                 //duke.echoUser(line);
-                duke.addTask(line);
+                //duke.addTask(line);
                 break;
             }
             line = in.nextLine();
