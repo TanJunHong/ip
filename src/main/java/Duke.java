@@ -1,6 +1,12 @@
 import java.util.Scanner;
 
 public class Duke {
+    private final String LOGO = " ____        _        \n"
+                            + "|  _ \\ _   _| | _____ \n"
+                            + "| | | | | | | |/ / _ \\\n"
+                            + "| |_| | |_| |   <  __/\n"
+                            + "|____/ \\__,_|_|\\_\\___|\n";
+
     private Task[] tasks;
     private int taskCount;
 
@@ -15,12 +21,7 @@ public class Duke {
 
     private void greetUser() {
         printDottedLine();
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println(logo);
+        System.out.println(LOGO);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         printDottedLine();
