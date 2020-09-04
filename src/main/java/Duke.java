@@ -123,44 +123,43 @@ public class Duke {
         Scanner in = new Scanner(System.in);
 
         while (true) {
-            String line = in.nextLine();
-            String[] instructions = line.split(" ", 2);
+            try {
+                String line = in.nextLine();
+                String[] instructions = line.split(" ", 2);
 
-            switch (instructions[0]) {
-            case LIST:
-                listTasks();
-                continue;
-            case BYE:
-                exit();
-                break;
-            default:
-                try {
-                    checkDescription(instructions);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                switch (instructions[0]) {
+                case LIST:
+                    listTasks();
                     continue;
+                case BYE:
+                    exit();
+                    break;
+                default:
+                    checkDescription(instructions);
+                    // echoUser(line);
+                    // addTask(line);
+                    break;
                 }
-                // echoUser(line);
-                // addTask(line);
-                break;
-            }
 
-            switch (instructions[0]) {
-            case TODO:
-                addToDo(instructions[1]);
-                break;
-            case DEADLINE:
-                addDeadline(instructions[1]);
-                break;
-            case EVENT:
-                addEvent(instructions[1]);
-                break;
-            case DONE:
-                int taskNumber = Integer.parseInt(instructions[1]);
-                markTaskAsDone(taskNumber);
-                break;
-            default:
-                break;
+                switch (instructions[0]) {
+                case TODO:
+                    addToDo(instructions[1]);
+                    break;
+                case DEADLINE:
+                    addDeadline(instructions[1]);
+                    break;
+                case EVENT:
+                    addEvent(instructions[1]);
+                    break;
+                case DONE:
+                    int taskNumber = Integer.parseInt(instructions[1]);
+                    markTaskAsDone(taskNumber);
+                    break;
+                default:
+                    break;
+                }
+            } catch (DukeException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
