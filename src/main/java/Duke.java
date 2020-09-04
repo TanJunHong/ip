@@ -113,41 +113,61 @@ public class Duke {
         System.exit(0);
     }
 
-    public static void main(String[] args) {
+    private void checkDescription(String[] instructions) {
+        if (instructions.length < 2) {
+            //throw new DukeException();
+        }
+    }
+
+    private void processInput() {
         Scanner in = new Scanner(System.in);
 
-        Duke duke = new Duke();
-        duke.greetUser();
-
-        String line = in.nextLine();
         while (true) {
+            String line = in.nextLine();
             String[] instructions = line.split(" ", 2);
+
+            switch (instructions[0]) {
+            case LIST:
+                listTasks();
+                continue;
+            case BYE:
+                exit();
+                break;
+            default:
+                try {
+                    checkDescription(instructions);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    continue;
+                }
+                // echoUser(line);
+                // addTask(line);
+                break;
+            }
+
             switch (instructions[0]) {
             case TODO:
-                duke.addToDo(instructions[1]);
+                addToDo(instructions[1]);
                 break;
             case DEADLINE:
-                duke.addDeadline(instructions[1]);
+                addDeadline(instructions[1]);
                 break;
             case EVENT:
-                duke.addEvent(instructions[1]);
-                break;
-            case LIST:
-                duke.listTasks();
+                addEvent(instructions[1]);
                 break;
             case DONE:
                 int taskNumber = Integer.parseInt(instructions[1]);
-                duke.markTaskAsDone(taskNumber);
-                break;
-            case BYE:
-                duke.exit();
+                markTaskAsDone(taskNumber);
                 break;
             default:
-                //duke.echoUser(line);
-                //duke.addTask(line);
                 break;
             }
-            line = in.nextLine();
         }
+    }
+
+    public static void main(String[] args) {
+        Duke duke = new Duke();
+        duke.greetUser();
+        duke.processInput();
     }
 }
