@@ -40,16 +40,6 @@ public class Duke {
         printWithIndent(DOTTED_LINE);
     }
 
-    /*private void addTask(String description) {
-        tasks[taskCount] = new Task(description);
-
-        printWithIndent(DOTTED_LINE);
-        printWithIndent(" added: " + tasks[taskCount].getDescription());
-        printWithIndent(DOTTED_LINE);
-
-        taskCount++;
-    }*/
-
     private void addTask(Task task) {
         tasks[taskCount] = task;
 
@@ -80,12 +70,6 @@ public class Duke {
         String at = instructions[1];
 
         addTask(new Event(description, at));
-    }
-
-    private void echoUser(String line) {
-        printWithIndent(DOTTED_LINE);
-        printWithIndent(line);
-        printWithIndent(DOTTED_LINE);
     }
 
     private void listTasks() {
