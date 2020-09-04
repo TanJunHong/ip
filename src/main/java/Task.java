@@ -1,5 +1,8 @@
 class Task {
 
+    private final String TICK = "✓";
+    private final String CROSS = "✗";
+
     private String description;
     private boolean isDone;
 
@@ -17,7 +20,7 @@ class Task {
     }
 
     String getStatusIcon() {
-        return isDone ? "✓" : "✗";
+        return isDone ? TICK : CROSS;
     }
 
     @Override

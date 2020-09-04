@@ -1,5 +1,7 @@
 class Deadline extends Task {
 
+    private final String LOGO = "[D]";
+
     private String by;
 
     Deadline(String description, String by) {
@@ -9,6 +11,6 @@ class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return LOGO + super.toString() + " (by: " + by + ")";
     }
 }

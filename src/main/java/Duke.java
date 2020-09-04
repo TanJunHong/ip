@@ -2,6 +2,15 @@ import java.util.Scanner;
 
 public class Duke {
 
+    private static final String TODO = "todo";
+    private static final String DEADLINE = "deadline";
+    private static final String EVENT = "event";
+    private static final String LIST = "list";
+    private static final String DONE = "done";
+    private static final String BYE = "bye";
+    private static final String BY = "/by";
+    private static final String AT = "/at";
+
     private final String LOGO = " ____        _        \n"
                             + "|  _ \\ _   _| | _____ \n"
                             + "| | | | | | | |/ / _ \\\n"
@@ -58,7 +67,7 @@ public class Duke {
     }
 
     private void addDeadline(String line) {
-        String[] instructions = line.split("/by");
+        String[] instructions = line.split(BY);
         String description = instructions[0];
         String by = instructions[1];
 
@@ -66,7 +75,7 @@ public class Duke {
     }
 
     private void addEvent(String line) {
-        String[] instructions = line.split("/at");
+        String[] instructions = line.split(AT);
         String description = instructions[0];
         String at = instructions[1];
 
@@ -114,23 +123,23 @@ public class Duke {
         while (true) {
             String[] instructions = line.split(" ", 2);
             switch (instructions[0]) {
-            case "todo":
+            case TODO:
                 duke.addToDo(instructions[1]);
                 break;
-            case "deadline":
+            case DEADLINE:
                 duke.addDeadline(instructions[1]);
                 break;
-            case "event":
+            case EVENT:
                 duke.addEvent(instructions[1]);
                 break;
-            case "list":
+            case LIST:
                 duke.listTasks();
                 break;
-            case "done":
+            case DONE:
                 int taskNumber = Integer.parseInt(instructions[1]);
                 duke.markTaskAsDone(taskNumber);
                 break;
-            case "bye":
+            case BYE:
                 duke.exit();
                 break;
             default:
