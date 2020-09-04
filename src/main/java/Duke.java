@@ -113,19 +113,13 @@ public class Duke {
         System.exit(0);
     }
 
-    private void checkDescription(String[] instructions) {
-        if (instructions.length < 2) {
-            //throw new DukeException();
-        }
-    }
-
     private void processInput() {
         Scanner in = new Scanner(System.in);
 
         while (true) {
+            String line = in.nextLine();
+            String[] instructions = line.split(" ", 2);
             try {
-                String line = in.nextLine();
-                String[] instructions = line.split(" ", 2);
 
                 switch (instructions[0]) {
                 case LIST:
@@ -134,14 +128,6 @@ public class Duke {
                 case BYE:
                     exit();
                     break;
-                default:
-                    checkDescription(instructions);
-                    // echoUser(line);
-                    // addTask(line);
-                    break;
-                }
-
-                switch (instructions[0]) {
                 case TODO:
                     addToDo(instructions[1]);
                     break;
@@ -156,10 +142,16 @@ public class Duke {
                     markTaskAsDone(taskNumber);
                     break;
                 default:
-                    break;
+                    throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                try {
+                    throw new DukeException("☹ OOPS!!! The description of a " + instructions[0] + " cannot be empty.");
+                } catch (DukeException dukeException) {
+
                 }
             } catch (DukeException e) {
-                System.out.println(e.getMessage());
+
             }
         }
     }
