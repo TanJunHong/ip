@@ -10,21 +10,24 @@ import java.util.Scanner;
 
 class Duke {
 
-    private static final String TODO = "todo";
-    private static final String DEADLINE = "deadline";
-    private static final String EVENT = "event";
-    private static final String LIST = "list";
-    private static final String DONE = "done";
-    private static final String BYE = "bye";
-    private static final String BY = "/by";
-    private static final String AT = "/at";
-
-    private final String LOGO = " ____        _        \n"
+    private final String TODO = "todo";
+    private final String DEADLINE = "deadline";
+    private final String EVENT = "event";
+    private final String LIST = "list";
+    private final String DONE = "done";
+    private final String BYE = "bye";
+    private final String BY = "/by";
+    private final String AT = "/at";
+    private final String DOTTED_LINE = "____________________________________________________________";
+    private final String LOGO = (" ____        _        \n"
                             + "|  _ \\ _   _| | _____ \n"
                             + "| | | | | | | |/ / _ \\\n"
                             + "| |_| | |_| |   <  __/\n"
-                            + "|____/ \\__,_|_|\\_\\___|\n";
-    private final String DOTTED_LINE = "____________________________________________________________";
+                            + "|____/ \\__,_|_|\\_\\___|\n")
+                            .replaceAll("\n", "\n\t");
+
+    private final int INSTRUCTION_LENGTH = 2;
+
     private final int MAX_TASKS = 100;
 
     private Task[] tasks;
@@ -36,8 +39,7 @@ class Duke {
     }
 
     private void printWithIndent(String string) {
-        String formattedString = string.replaceAll("\n", "\n\t");
-        System.out.println("\t" + formattedString);
+        System.out.println("\t" + string);
     }
 
     private void greetUser() {
@@ -64,16 +66,27 @@ class Duke {
         addTask(new ToDo(description));
     }
 
-    private void addDeadline(String line) {
+    private void addDeadline(String line) throws DukeException {
         String[] instructions = line.split(BY);
+
+        if (instructions.length < INSTRUCTION_LENGTH) {
+            throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
+        }
+
         String description = instructions[0];
         String by = instructions[1];
 
         addTask(new Deadline(description, by));
+
     }
 
-    private void addEvent(String line) {
+    private void addEvent(String line) throws DukeException {
         String[] instructions = line.split(AT);
+
+        if (instructions.length < INSTRUCTION_LENGTH) {
+            throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
+        }
+
         String description = instructions[0];
         String at = instructions[1];
 
@@ -89,13 +102,22 @@ class Duke {
         printWithIndent(DOTTED_LINE);
     }
 
-    private void markTaskAsDone(int taskNumber) {
-        tasks[taskNumber - 1].markAsDone();
+    private void markTaskAsDone(String instruction) throws DukeException {
 
-        printWithIndent(DOTTED_LINE);
-        printWithIndent(" Nice! I've marked this task as done:");
-        printWithIndent("   " + tasks[taskNumber - 1].toString());
-        printWithIndent(DOTTED_LINE);
+        try {
+            int taskNumber = Integer.parseInt(instruction);
+            if (taskNumber < 1 || taskNumber > Math.min(MAX_TASKS, taskCount)) {
+                throw new DukeException("Invalid task number!");
+            }
+            tasks[taskNumber - 1].markAsDone();
+
+            printWithIndent(DOTTED_LINE);
+            printWithIndent(" Nice! I've marked this task as done:");
+            printWithIndent("   " + tasks[taskNumber - 1].toString());
+            printWithIndent(DOTTED_LINE);
+        } catch (NumberFormatException e) {
+            throw new DukeException("Invalid task number!");
+        }
     }
 
     private void exit() {
@@ -105,6 +127,12 @@ class Duke {
         System.exit(0);
     }
 
+    private void verifyInstructionLength(String[] instructions) throws DukeException {
+        if (instructions.length < INSTRUCTION_LENGTH) {
+            throw new DukeException("☹ OOPS!!! The description of a " + instructions[0] + " cannot be empty.");
+        }
+    }
+
     private void processInput() {
         Scanner in = new Scanner(System.in);
 
@@ -112,7 +140,6 @@ class Duke {
             String line = in.nextLine();
             String[] instructions = line.split(" ", 2);
             try {
-
                 switch (instructions[0]) {
                 case LIST:
                     listTasks();
@@ -121,26 +148,23 @@ class Duke {
                     exit();
                     break;
                 case TODO:
+                    verifyInstructionLength(instructions);
                     addToDo(instructions[1]);
                     break;
                 case DEADLINE:
+                    verifyInstructionLength(instructions);
                     addDeadline(instructions[1]);
                     break;
                 case EVENT:
+                    verifyInstructionLength(instructions);
                     addEvent(instructions[1]);
                     break;
                 case DONE:
-                    int taskNumber = Integer.parseInt(instructions[1]);
-                    markTaskAsDone(taskNumber);
+                    verifyInstructionLength(instructions);
+                    markTaskAsDone(instructions[1]);
                     break;
                 default:
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                try {
-                    throw new DukeException("☹ OOPS!!! The description of a " + instructions[0] + " cannot be empty.");
-                } catch (DukeException dukeException) {
-
                 }
             } catch (DukeException e) {
 

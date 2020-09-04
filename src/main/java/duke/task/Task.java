@@ -2,8 +2,8 @@ package duke.task;
 
 public class Task {
 
-    private final String TICK = "✓";
-    private final String CROSS = "✗";
+    private final String TICK = "[✓]";
+    private final String CROSS = "[✗]";
 
     private String description;
     private boolean isDone;
@@ -27,7 +27,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + getDescription();
+        return getStatusIcon() + " " + getDescription();
     }
 
 }
