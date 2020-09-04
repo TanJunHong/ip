@@ -1,3 +1,5 @@
+package duke;
+
 class Deadline extends Task {
 
     private final String LOGO = "[D]";
