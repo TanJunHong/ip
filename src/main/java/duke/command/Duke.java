@@ -1,8 +1,14 @@
-package duke;
+package duke.command;
+
+import duke.exception.DukeException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
 
 import java.util.Scanner;
 
-public class Duke {
+class Duke {
 
     private static final String TODO = "todo";
     private static final String DEADLINE = "deadline";
@@ -24,7 +30,7 @@ public class Duke {
     private Task[] tasks;
     private int taskCount;
 
-    public Duke() {
+    Duke() {
         tasks = new Task[MAX_TASKS];
         taskCount = 0;
     }

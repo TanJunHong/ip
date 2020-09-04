@@ -1,12 +1,12 @@
-package duke;
+package duke.task;
 
-class Event extends Task {
+public class Event extends Task {
 
     private final String LOGO = "[E]";
 
     private String at;
 
-    Event(String description, String at) {
+    public Event(String description, String at) {
         super(description);
         this.at = at;
     }

@@ -1,6 +1,6 @@
-package duke;
+package duke.task;
 
-class Task {
+public class Task {
 
     private final String TICK = "✓";
     private final String CROSS = "✗";
@@ -13,15 +13,15 @@ class Task {
         isDone = false;
     }
 
-    void markAsDone() {
+    public void markAsDone() {
         this.isDone = true;
     }
 
-    String getDescription() {
+    private String getDescription() {
         return description;
     }
 
-    String getStatusIcon() {
+    private String getStatusIcon() {
         return isDone ? TICK : CROSS;
     }
 
