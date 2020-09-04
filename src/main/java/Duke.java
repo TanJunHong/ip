@@ -113,6 +113,16 @@ public class Duke {
         System.exit(0);
     }
 
+    private void checkDescription(String[] instructions) throws DukeException {
+        if (instructions.length < 2) {
+            throw new DukeException("☹ OOPS!!! The description of a " + instructions[0] + " cannot be empty.");
+        }
+    }
+
+    private void invalidCommand() throws DukeException {
+        throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
