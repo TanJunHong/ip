@@ -76,6 +76,10 @@ class Duke {
         String description = instructions[0];
         String by = instructions[1];
 
+        if (description.isBlank() || by.isBlank()) {
+            throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
+        }
+
         addTask(new Deadline(description, by));
 
     }
@@ -89,6 +93,10 @@ class Duke {
 
         String description = instructions[0];
         String at = instructions[1];
+
+        if (description.isBlank() || at.isBlank()) {
+            throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
+        }
 
         addTask(new Event(description, at));
     }
