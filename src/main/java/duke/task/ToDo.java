@@ -1,8 +1,10 @@
-class ToDo extends Task {
+package duke.task;
+
+public class ToDo extends Task {
 
     private final String LOGO = "[T]";
 
-    ToDo(String description) {
+    public ToDo(String description) {
         super(description);
     }
 
