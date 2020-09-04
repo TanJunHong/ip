@@ -8,4 +8,13 @@ todo borrow book
 list
 deadline return book /by Sunday
 event project meeting /at Mon 2-4pm
+todo
+blah
+done 0
+done 100
+done abc
+deadline a
+deadline /by
+deadline return book /by
+deadline /by Sunday
 bye
