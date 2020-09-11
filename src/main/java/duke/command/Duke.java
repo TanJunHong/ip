@@ -19,6 +19,7 @@ class Duke {
     private final String BYE = "bye";
     private final String BY = "/by";
     private final String AT = "/at";
+    private final String DELETE = "delete";
     private final String DOTTED_LINE = "____________________________________________________________";
     private final String LOGO = (" ____        _        \n"
                             + "|  _ \\ _   _| | _____ \n"
@@ -37,6 +38,12 @@ class Duke {
         taskCount = 0;
     }
 
+    public static void main(String[] args) {
+        Duke duke = new Duke();
+        duke.greetUser();
+        duke.processInput();
+    }
+
     private void printWithIndent(String string) {
         System.out.println("\t" + string);
     }
@@ -47,6 +54,26 @@ class Duke {
         printWithIndent(" Hello! I'm Duke");
         printWithIndent(" What can I do for you?");
         printWithIndent(DOTTED_LINE);
+    }
+
+    private void deleteTask(String instruction) throws DukeException {
+
+        try {
+            int taskNumber = Integer.parseInt(instruction);
+            if (taskNumber < 1 || taskNumber > taskCount) {
+                throw new DukeException("Invalid task number!");
+            }
+            Task removedTask = tasks.remove(taskNumber - 1);
+            taskCount--;
+
+            printWithIndent(DOTTED_LINE);
+            printWithIndent(" Noted. I've removed this task:");
+            printWithIndent("   " + removedTask.toString());
+            printWithIndent(" Now you have " + taskCount + " tasks in the list.");
+            printWithIndent(DOTTED_LINE);
+        } catch (NumberFormatException e) {
+            throw new DukeException("Invalid task number!");
+        }
     }
 
     private void addTask(Task task) {
@@ -170,6 +197,10 @@ class Duke {
                     verifyInstructionLength(instructions);
                     markTaskAsDone(instructions[1]);
                     break;
+                case DELETE:
+                    verifyInstructionLength(instructions);
+                    deleteTask(instructions[1]);
+                    break;
                 default:
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
@@ -177,11 +208,5 @@ class Duke {
 
             }
         }
-    }
-
-    public static void main(String[] args) {
-        Duke duke = new Duke();
-        duke.greetUser();
-        duke.processInput();
     }
 }
