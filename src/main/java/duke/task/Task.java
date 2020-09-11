@@ -4,6 +4,8 @@ public class Task {
 
     private final String TICK = "[✓]";
     private final String CROSS = "[✗]";
+    private final int COMPLETE = 1;
+    private final int INCOMPLETE = 0;
 
     private String description;
     private boolean isDone;
@@ -23,6 +25,10 @@ public class Task {
 
     private String getStatusIcon() {
         return isDone ? TICK : CROSS;
+    }
+
+    public String getFormattedTask() {
+        return " | " + (isDone ? COMPLETE : INCOMPLETE) + " | " + description;
     }
 
     @Override

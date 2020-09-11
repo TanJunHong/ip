@@ -2,7 +2,7 @@ package duke.task;
 
 public class Deadline extends Task {
 
-    private final String LOGO = "[D]";
+    private final String LOGO = "D";
 
     private String by;
 
@@ -12,7 +12,12 @@ public class Deadline extends Task {
     }
 
     @Override
+    public String getFormattedTask() {
+        return LOGO + super.getFormattedTask() + " | " + by + System.lineSeparator();
+    }
+
+    @Override
     public String toString() {
-        return LOGO + super.toString() + " (by: " + by + ")";
+        return "[" + LOGO + "]" + super.toString() + " (by: " + by + ")";
     }
 }

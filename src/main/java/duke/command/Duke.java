@@ -6,10 +6,18 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 class Duke {
 
+    private final String FOLDER_PATH = "data";
+    private final String FILE_NAME = "duke.txt";
     private final String TODO = "todo";
     private final String DEADLINE = "deadline";
     private final String EVENT = "event";
@@ -62,7 +70,8 @@ class Duke {
         printWithIndent(DOTTED_LINE);
     }
 
-    private void addToDo(String description) {
+    private void addToDo(String line) {
+        String description = line.trim();
         addTask(new ToDo(description));
     }
 
@@ -73,8 +82,8 @@ class Duke {
             throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
         }
 
-        String description = instructions[0];
-        String by = instructions[1];
+        String description = instructions[0].trim();
+        String by = instructions[1].trim();
 
         if (description.isBlank() || by.isBlank()) {
             throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
@@ -91,8 +100,8 @@ class Duke {
             throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
         }
 
-        String description = instructions[0];
-        String at = instructions[1];
+        String description = instructions[0].trim();
+        String at = instructions[1].trim();
 
         if (description.isBlank() || at.isBlank()) {
             throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
@@ -154,7 +163,7 @@ class Duke {
                     continue;
                 case BYE:
                     exit();
-                    break;
+                    continue;
                 case TODO:
                     verifyInstructionLength(instructions);
                     addToDo(instructions[1]);
@@ -174,10 +183,35 @@ class Duke {
                 default:
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
+
+                try {
+                    saveToFile();
+                } catch (IOException e) {
+                    throw new DukeException("Error Writing File!");
+                }
+
             } catch (DukeException e) {
 
             }
         }
+    }
+
+    private void saveToFile() throws IOException {
+        StringBuilder fileContent = new StringBuilder();
+
+        for (int i = 0; i < taskCount; i++) {
+            fileContent.append(tasks[i].getFormattedTask());
+        }
+
+        Path folderPath = Paths.get(FOLDER_PATH);
+        if (!Files.exists(folderPath) && !new File(FOLDER_PATH).mkdir()) {
+            System.out.println("Error creating directory!");
+        }
+
+        Path filePath = Paths.get(FOLDER_PATH, FILE_NAME);
+        BufferedWriter bufferedWriter = Files.newBufferedWriter(filePath);
+        bufferedWriter.write(fileContent.toString());
+        bufferedWriter.close();
     }
 
     public static void main(String[] args) {
