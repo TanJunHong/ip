@@ -6,6 +6,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class Duke {
@@ -28,13 +29,11 @@ class Duke {
 
     private final int INSTRUCTION_LENGTH = 2;
 
-    private final int MAX_TASKS = 100;
-
-    private Task[] tasks;
+    private ArrayList<Task> tasks;
     private int taskCount;
 
     Duke() {
-        tasks = new Task[MAX_TASKS];
+        tasks = new ArrayList<>();
         taskCount = 0;
     }
 
@@ -51,11 +50,11 @@ class Duke {
     }
 
     private void addTask(Task task) {
-        tasks[taskCount] = task;
+        tasks.add(task);
 
         printWithIndent(DOTTED_LINE);
         printWithIndent(" Got it. I've added this task:");
-        printWithIndent("   " + tasks[taskCount].toString());
+        printWithIndent("   " + tasks.get(taskCount).toString());
 
         taskCount++;
         printWithIndent(" Now you have " + taskCount + " tasks in the list.");
@@ -105,7 +104,7 @@ class Duke {
         printWithIndent(DOTTED_LINE);
         printWithIndent(" Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            printWithIndent(" " + (i + 1) + "." + tasks[i]);
+            printWithIndent(" " + (i + 1) + "." + tasks.get(i));
         }
         printWithIndent(DOTTED_LINE);
     }
@@ -114,14 +113,14 @@ class Duke {
 
         try {
             int taskNumber = Integer.parseInt(instruction);
-            if (taskNumber < 1 || taskNumber > Math.min(MAX_TASKS, taskCount)) {
+            if (taskNumber < 1 || taskNumber > taskCount) {
                 throw new DukeException("Invalid task number!");
             }
-            tasks[taskNumber - 1].markAsDone();
+            tasks.get(taskNumber - 1).markAsDone();
 
             printWithIndent(DOTTED_LINE);
             printWithIndent(" Nice! I've marked this task as done:");
-            printWithIndent("   " + tasks[taskNumber - 1].toString());
+            printWithIndent("   " + tasks.get(taskNumber - 1).toString());
             printWithIndent(DOTTED_LINE);
         } catch (NumberFormatException e) {
             throw new DukeException("Invalid task number!");
