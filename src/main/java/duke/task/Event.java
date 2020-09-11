@@ -4,7 +4,7 @@ public class Event extends Task {
 
     private final String LOGO = "[E]";
 
-    private String at;
+    private final String at;
 
     public Event(String description, String at) {
         super(description);

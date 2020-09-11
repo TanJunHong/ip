@@ -22,15 +22,15 @@ class Duke {
     private final String DELETE = "delete";
     private final String DOTTED_LINE = "____________________________________________________________";
     private final String LOGO = (" ____        _        \n"
-                            + "|  _ \\ _   _| | _____ \n"
-                            + "| | | | | | | |/ / _ \\\n"
-                            + "| |_| | |_| |   <  __/\n"
-                            + "|____/ \\__,_|_|\\_\\___|\n")
-                            .replaceAll("\n", "\n\t");
+            + "|  _ \\ _   _| | _____ \n"
+            + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n"
+            + "|____/ \\__,_|_|\\_\\___|\n")
+            .replaceAll("\n", "\n\t");
 
     private final int INSTRUCTION_LENGTH = 2;
 
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
     private int taskCount;
 
     Duke() {
@@ -204,7 +204,7 @@ class Duke {
                 default:
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
-            } catch (DukeException e) {
+            } catch (DukeException ignored) {
 
             }
         }
