@@ -4,13 +4,15 @@ public class Task {
 
     private final String TICK = "[✓]";
     private final String CROSS = "[✗]";
+    private final int COMPLETE = 1;
+    private final int INCOMPLETE = 0;
 
     private final String description;
     private boolean isDone;
 
-    Task(String description) {
+    Task(String description, boolean isDone) {
         this.description = description;
-        isDone = false;
+        this.isDone = isDone;
     }
 
     public void markAsDone() {
@@ -23,6 +25,10 @@ public class Task {
 
     private String getStatusIcon() {
         return isDone ? TICK : CROSS;
+    }
+
+    public String getFormattedTask() {
+        return " | " + (isDone ? COMPLETE : INCOMPLETE) + " | " + description;
     }
 
     @Override
