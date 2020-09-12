@@ -6,6 +6,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -41,13 +42,55 @@ class Duke {
     private Task[] tasks;
     private int taskCount;
 
+    private boolean isLoaded;
+
     Duke() {
         tasks = new Task[MAX_TASKS];
         taskCount = 0;
+        isLoaded = false;
     }
 
     private void printWithIndent(String string) {
         System.out.println("\t" + string);
+    }
+
+    private void loadTasks() {
+        Path filePath = Paths.get(FOLDER_PATH, FILE_NAME);
+
+        try {
+            try {
+                BufferedReader bufferedReader = Files.newBufferedReader(filePath);
+
+                while (true) {
+                    String line = bufferedReader.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    String[] instructions = line.split("\\|", 3);
+                    boolean isDone = instructions[1].trim().equals("1");
+                    switch (instructions[0].trim()) {
+                    case "D":
+                        addDeadline(instructions[2], isDone);
+                        break;
+                    case "E":
+                        addEvent(instructions[2], isDone);
+                        break;
+                    case "T":
+                        addToDo(instructions[2], isDone);
+                        break;
+                    default:
+                        throw new DukeException("Error reading file!");
+                    }
+                }
+            } catch (IOException e) {
+                throw new DukeException("Error reading file!");
+            }
+        } catch (DukeException e) {
+
+        }
+
+        isLoaded = true;
+
     }
 
     private void greetUser() {
@@ -60,23 +103,27 @@ class Duke {
 
     private void addTask(Task task) {
         tasks[taskCount] = task;
-
-        printWithIndent(DOTTED_LINE);
-        printWithIndent(" Got it. I've added this task:");
-        printWithIndent("   " + tasks[taskCount].toString());
-
         taskCount++;
-        printWithIndent(" Now you have " + taskCount + " tasks in the list.");
-        printWithIndent(DOTTED_LINE);
+
+        if (isLoaded) {
+            printWithIndent(DOTTED_LINE);
+            printWithIndent(" Got it. I've added this task:");
+            printWithIndent("   " + tasks[taskCount - 1].toString());
+            printWithIndent(" Now you have " + taskCount + " tasks in the list.");
+            printWithIndent(DOTTED_LINE);
+        }
     }
 
-    private void addToDo(String line) {
+    private void addToDo(String line, boolean isDone) {
         String description = line.trim();
-        addTask(new ToDo(description));
+        addTask(new ToDo(description, isDone));
     }
 
-    private void addDeadline(String line) throws DukeException {
+    private void addDeadline(String line, boolean isDone) throws DukeException {
         String[] instructions = line.split(BY);
+        if (instructions.length == 1) {
+            instructions = line.split("\\|");
+        }
 
         if (instructions.length < INSTRUCTION_LENGTH) {
             throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
@@ -89,12 +136,15 @@ class Duke {
             throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
         }
 
-        addTask(new Deadline(description, by));
+        addTask(new Deadline(description, isDone, by));
 
     }
 
-    private void addEvent(String line) throws DukeException {
+    private void addEvent(String line, boolean isDone) throws DukeException {
         String[] instructions = line.split(AT);
+        if (instructions.length == 1) {
+            instructions = line.split("\\|");
+        }
 
         if (instructions.length < INSTRUCTION_LENGTH) {
             throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
@@ -107,7 +157,7 @@ class Duke {
             throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
         }
 
-        addTask(new Event(description, at));
+        addTask(new Event(description, isDone, at));
     }
 
     private void listTasks() {
@@ -166,15 +216,15 @@ class Duke {
                     continue;
                 case TODO:
                     verifyInstructionLength(instructions);
-                    addToDo(instructions[1]);
+                    addToDo(instructions[1], false);
                     break;
                 case DEADLINE:
                     verifyInstructionLength(instructions);
-                    addDeadline(instructions[1]);
+                    addDeadline(instructions[1], false);
                     break;
                 case EVENT:
                     verifyInstructionLength(instructions);
-                    addEvent(instructions[1]);
+                    addEvent(instructions[1], false);
                     break;
                 case DONE:
                     verifyInstructionLength(instructions);
@@ -216,6 +266,7 @@ class Duke {
 
     public static void main(String[] args) {
         Duke duke = new Duke();
+        duke.loadTasks();
         duke.greetUser();
         duke.processInput();
     }

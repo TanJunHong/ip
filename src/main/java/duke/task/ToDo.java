@@ -4,8 +4,8 @@ public class ToDo extends Task {
 
     private final String LOGO = "T";
 
-    public ToDo(String description) {
-        super(description);
+    public ToDo(String description, boolean isDone) {
+        super(description, isDone);
     }
 
     @Override

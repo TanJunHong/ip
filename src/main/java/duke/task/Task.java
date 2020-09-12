@@ -10,9 +10,9 @@ public class Task {
     private String description;
     private boolean isDone;
 
-    Task(String description) {
+    Task(String description, boolean isDone) {
         this.description = description;
-        isDone = false;
+        this.isDone = isDone;
     }
 
     public void markAsDone() {
