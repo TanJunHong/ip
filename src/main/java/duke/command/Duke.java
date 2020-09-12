@@ -6,6 +6,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class Duke {
@@ -18,24 +19,29 @@ class Duke {
     private final String BYE = "bye";
     private final String BY = "/by";
     private final String AT = "/at";
+    private final String DELETE = "delete";
     private final String DOTTED_LINE = "____________________________________________________________";
     private final String LOGO = (" ____        _        \n"
-                            + "|  _ \\ _   _| | _____ \n"
-                            + "| | | | | | | |/ / _ \\\n"
-                            + "| |_| | |_| |   <  __/\n"
-                            + "|____/ \\__,_|_|\\_\\___|\n")
-                            .replaceAll("\n", "\n\t");
+            + "|  _ \\ _   _| | _____ \n"
+            + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n"
+            + "|____/ \\__,_|_|\\_\\___|\n")
+            .replaceAll("\n", "\n\t");
 
     private final int INSTRUCTION_LENGTH = 2;
 
-    private final int MAX_TASKS = 100;
-
-    private Task[] tasks;
+    private final ArrayList<Task> tasks;
     private int taskCount;
 
     Duke() {
-        tasks = new Task[MAX_TASKS];
+        tasks = new ArrayList<>();
         taskCount = 0;
+    }
+
+    public static void main(String[] args) {
+        Duke duke = new Duke();
+        duke.greetUser();
+        duke.processInput();
     }
 
     private void printWithIndent(String string) {
@@ -50,12 +56,32 @@ class Duke {
         printWithIndent(DOTTED_LINE);
     }
 
+    private void deleteTask(String instruction) throws DukeException {
+
+        try {
+            int taskNumber = Integer.parseInt(instruction);
+            if (taskNumber < 1 || taskNumber > taskCount) {
+                throw new DukeException("Invalid task number!");
+            }
+            Task removedTask = tasks.remove(taskNumber - 1);
+            taskCount--;
+
+            printWithIndent(DOTTED_LINE);
+            printWithIndent(" Noted. I've removed this task:");
+            printWithIndent("   " + removedTask.toString());
+            printWithIndent(" Now you have " + taskCount + " tasks in the list.");
+            printWithIndent(DOTTED_LINE);
+        } catch (NumberFormatException e) {
+            throw new DukeException("Invalid task number!");
+        }
+    }
+
     private void addTask(Task task) {
-        tasks[taskCount] = task;
+        tasks.add(task);
 
         printWithIndent(DOTTED_LINE);
         printWithIndent(" Got it. I've added this task:");
-        printWithIndent("   " + tasks[taskCount].toString());
+        printWithIndent("   " + tasks.get(taskCount).toString());
 
         taskCount++;
         printWithIndent(" Now you have " + taskCount + " tasks in the list.");
@@ -105,7 +131,7 @@ class Duke {
         printWithIndent(DOTTED_LINE);
         printWithIndent(" Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            printWithIndent(" " + (i + 1) + "." + tasks[i]);
+            printWithIndent(" " + (i + 1) + "." + tasks.get(i));
         }
         printWithIndent(DOTTED_LINE);
     }
@@ -114,14 +140,14 @@ class Duke {
 
         try {
             int taskNumber = Integer.parseInt(instruction);
-            if (taskNumber < 1 || taskNumber > Math.min(MAX_TASKS, taskCount)) {
+            if (taskNumber < 1 || taskNumber > taskCount) {
                 throw new DukeException("Invalid task number!");
             }
-            tasks[taskNumber - 1].markAsDone();
+            tasks.get(taskNumber - 1).markAsDone();
 
             printWithIndent(DOTTED_LINE);
             printWithIndent(" Nice! I've marked this task as done:");
-            printWithIndent("   " + tasks[taskNumber - 1].toString());
+            printWithIndent("   " + tasks.get(taskNumber - 1).toString());
             printWithIndent(DOTTED_LINE);
         } catch (NumberFormatException e) {
             throw new DukeException("Invalid task number!");
@@ -171,18 +197,16 @@ class Duke {
                     verifyInstructionLength(instructions);
                     markTaskAsDone(instructions[1]);
                     break;
+                case DELETE:
+                    verifyInstructionLength(instructions);
+                    deleteTask(instructions[1]);
+                    break;
                 default:
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
-            } catch (DukeException e) {
+            } catch (DukeException ignored) {
 
             }
         }
-    }
-
-    public static void main(String[] args) {
-        Duke duke = new Duke();
-        duke.greetUser();
-        duke.processInput();
     }
 }
