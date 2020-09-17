@@ -2,10 +2,10 @@ package duke.task;
 
 public class Task {
 
-    private final String TICK = "[✓]";
-    private final String CROSS = "[✗]";
-    private final int COMPLETE = 1;
-    private final int INCOMPLETE = 0;
+    private static final String TICK = "[\u2713]";
+    private static final String CROSS = "[\u2718]";
+    private static final int COMPLETE = 1;
+    private static final int INCOMPLETE = 0;
 
     private final String description;
     private boolean isDone;

@@ -2,7 +2,7 @@ package duke.task;
 
 public class Deadline extends Task {
 
-    private final String LOGO = "D";
+    private static final String LOGO = "D";
 
     private final String by;
 

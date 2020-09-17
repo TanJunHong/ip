@@ -18,26 +18,26 @@ import java.util.Scanner;
 
 class Duke {
 
-    private final String FOLDER_PATH = "data";
-    private final String FILE_NAME = "duke.txt";
-    private final String TODO = "todo";
-    private final String DEADLINE = "deadline";
-    private final String EVENT = "event";
-    private final String LIST = "list";
-    private final String DONE = "done";
-    private final String BYE = "bye";
-    private final String BY = "/by";
-    private final String AT = "/at";
-    private final String DELETE = "delete";
-    private final String DOTTED_LINE = "____________________________________________________________";
-    private final String LOGO = (" ____        _        \n"
+    private static final String FOLDER_PATH = "data";
+    private static final String FILE_NAME = "duke.txt";
+    private static final String TODO = "todo";
+    private static final String DEADLINE = "deadline";
+    private static final String EVENT = "event";
+    private static final String LIST = "list";
+    private static final String DONE = "done";
+    private static final String BYE = "bye";
+    private static final String BY = "/by";
+    private static final String AT = "/at";
+    private static final String DELETE = "delete";
+    private static final String DOTTED_LINE = "____________________________________________________________";
+    private static final String LOGO = (" ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"
             + "| | | | | | | |/ / _ \\\n"
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n")
             .replaceAll("\n", System.lineSeparator() + "\t");
 
-    private final int INSTRUCTION_LENGTH = 2;
+    private static final int INSTRUCTION_LENGTH = 2;
 
     private final ArrayList<Task> tasks;
     private int taskCount;
@@ -148,43 +148,41 @@ class Duke {
         addTask(new ToDo(description, isDone));
     }
 
-    private void addDeadline(String line, boolean isDone) throws DukeException {
-        String[] instructions = line.split(BY);
+    private String[] splitDescriptionAndDateTime(String line, String delimiter) throws DukeException {
+        String[] instructions = line.split(delimiter);
         if (instructions.length == 1) {
             instructions = line.split("\\|");
         }
 
         if (instructions.length < INSTRUCTION_LENGTH) {
-            throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
+            throw new DukeException("\u2639 OOPS!!! Cannot decipher description or date/time.");
         }
 
-        String description = instructions[0].trim();
-        String by = instructions[1].trim();
+        instructions[0] = instructions[0].trim();
+        instructions[1] = instructions[1].trim();
 
-        if (description.isBlank() || by.isBlank()) {
-            throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
+        if (instructions[0].isBlank() || instructions[1].isBlank()) {
+            throw new DukeException("\u2639 OOPS!!! Cannot decipher description or date/time.");
         }
+
+        return instructions;
+    }
+
+    private void addDeadline(String line, boolean isDone) throws DukeException {
+        String[] instructions = splitDescriptionAndDateTime(line, BY);
+
+        String description = instructions[0];
+        String by = instructions[1];
 
         addTask(new Deadline(description, isDone, by));
 
     }
 
     private void addEvent(String line, boolean isDone) throws DukeException {
-        String[] instructions = line.split(AT);
-        if (instructions.length == 1) {
-            instructions = line.split("\\|");
-        }
+        String[] instructions = splitDescriptionAndDateTime(line, AT);
 
-        if (instructions.length < INSTRUCTION_LENGTH) {
-            throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
-        }
-
-        String description = instructions[0].trim();
-        String at = instructions[1].trim();
-
-        if (description.isBlank() || at.isBlank()) {
-            throw new DukeException("☹ OOPS!!! Cannot decipher description or date/time.");
-        }
+        String description = instructions[0];
+        String at = instructions[1];
 
         addTask(new Event(description, isDone, at));
     }
@@ -220,12 +218,11 @@ class Duke {
         printWithIndent(DOTTED_LINE);
         printWithIndent(" Bye. Hope to see you again soon!");
         printWithIndent(DOTTED_LINE);
-        System.exit(0);
     }
 
     private void verifyInstructionLength(String[] instructions) throws DukeException {
         if (instructions.length < INSTRUCTION_LENGTH) {
-            throw new DukeException("☹ OOPS!!! The description of a " + instructions[0] + " cannot be empty.");
+            throw new DukeException("\u2639 OOPS!!! The description of a " + instructions[0] + " cannot be empty.");
         }
     }
 
@@ -242,7 +239,7 @@ class Duke {
                     continue;
                 case BYE:
                     exit();
-                    continue;
+                    System.exit(0);
                 case TODO:
                     verifyInstructionLength(instructions);
                     addToDo(instructions[1], false);
@@ -264,7 +261,7 @@ class Duke {
                     deleteTask(instructions[1]);
                     break;
                 default:
-                    throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    throw new DukeException("\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
                 try {
                     saveToFile();

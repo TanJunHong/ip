@@ -2,7 +2,7 @@ package duke.task;
 
 public class Event extends Task {
 
-    private final String LOGO = "E";
+    private static final String LOGO = "E";
 
     private final String at;
 

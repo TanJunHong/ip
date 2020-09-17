@@ -2,7 +2,7 @@ package duke.task;
 
 public class ToDo extends Task {
 
-    private final String LOGO = "T";
+    private static final String LOGO = "T";
 
     public ToDo(String description, boolean isDone) {
         super(description, isDone);
