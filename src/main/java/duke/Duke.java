@@ -1,4 +1,4 @@
-package duke.commands;
+package duke;
 
 import duke.exception.DukeException;
 import duke.task.Deadline;
