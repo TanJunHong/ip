@@ -7,4 +7,8 @@ public class DukeException extends Exception {
         System.out.println("\t " + errorMessage);
         System.out.println("\t" + "____________________________________________________________");
     }
+
+    public DukeException() {
+
+    }
 }
