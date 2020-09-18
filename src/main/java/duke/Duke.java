@@ -1,10 +1,10 @@
 package duke;
 
-import duke.exception.DukeException;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.ToDo;
+import duke.data.exception.DukeException;
+import duke.data.task.Deadline;
+import duke.data.task.Event;
+import duke.data.task.Task;
+import duke.data.task.ToDo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
