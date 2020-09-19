@@ -1,0 +1,69 @@
+package duke.ui;
+
+import duke.data.task.Task;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Ui {
+
+    private Scanner in = new Scanner(System.in);
+
+    private static final String DOTTED_LINE = "____________________________________________________________";
+
+    private void printWithIndent(String string) {
+        System.out.println("\t " + string);
+    }
+
+    public void showLine() {
+        System.out.println("\t" + DOTTED_LINE);
+    }
+
+    public void showError(String message) {
+        printWithIndent(message);
+    }
+
+    public void showWelcome() {
+        showLine();
+        printWithIndent("Hello! I'm Duke");
+        printWithIndent("What can I do for you?");
+        showLine();
+    }
+
+    public void showList(ArrayList<Task> tasks) {
+        printWithIndent("Here are the tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            printWithIndent((i + 1) + "." + tasks.get(i));
+        }
+    }
+
+    public void showDone(Task task) {
+        printWithIndent("Nice! I've marked this task as done:");
+        printWithIndent("  " + task);
+    }
+
+    public void showExit() {
+        printWithIndent("Bye. Hope to see you again soon!");
+    }
+
+    public void showLoadingError() {
+        showError("Cannot read file.");
+    }
+
+    public String readCommand() {
+        System.out.println();
+        return in.nextLine();
+    }
+
+    public void showAdd(Task task, int size) {
+        printWithIndent("Got it. I've added this task:");
+        printWithIndent("  " + task);
+        printWithIndent("Now you have " + size + " tasks in the list.");
+    }
+
+    public void showDelete(Task task, int size) {
+        printWithIndent("Noted. I've removed this task:");
+        printWithIndent("  " + task);
+        printWithIndent("Now you have " + size + " tasks in the list.");
+    }
+}
