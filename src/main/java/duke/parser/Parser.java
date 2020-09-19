@@ -11,33 +11,6 @@ public class Parser {
 
     private final static int MAX_INSTRUCTION_LENGTH = 3;
 
-    public Task readTask(String line) {
-        String[] instructions = line.split("\\|", MAX_INSTRUCTION_LENGTH + 1);
-
-        String taskType = instructions[0].trim();
-        boolean isDone = instructions[1].trim().equals("1");
-        String description = instructions[2].trim();
-        Task task;
-
-        switch (taskType) {
-        case "D":
-            String by = instructions[3].trim();
-            task = new Deadline(description, isDone, by);
-            break;
-        case "E":
-            String at = instructions[3].trim();
-            task = new Event(description, isDone, at);
-            break;
-        case "T":
-            task = new ToDo(description, isDone);
-            break;
-        default:
-            task = null;
-            break;
-        }
-        return task;
-    }
-
     public static Command parse(String fullCommand) throws DukeException {
 
         String[] instructions = fullCommand.split(" ", 2);
@@ -112,9 +85,35 @@ public class Parser {
     private static void verifyInstruction(String[] instructions) throws DukeException {
         if (instructions.length != MAX_INSTRUCTION_LENGTH - 1) {
             throw new DukeException("The description of a " + instructions[0] + " cannot be empty.");
-        }
-        else if (instructions[0].isBlank() || instructions[1].isBlank()) {
+        } else if (instructions[0].isBlank() || instructions[1].isBlank()) {
             throw new DukeException("Cannot decipher description or date/time.");
         }
+    }
+
+    public Task readTask(String line) {
+        String[] instructions = line.split("\\|", MAX_INSTRUCTION_LENGTH + 1);
+
+        String taskType = instructions[0].trim();
+        boolean isDone = instructions[1].trim().equals("1");
+        String description = instructions[2].trim();
+        Task task;
+
+        switch (taskType) {
+        case "D":
+            String by = instructions[3].trim();
+            task = new Deadline(description, isDone, by);
+            break;
+        case "E":
+            String at = instructions[3].trim();
+            task = new Event(description, isDone, at);
+            break;
+        case "T":
+            task = new ToDo(description, isDone);
+            break;
+        default:
+            task = null;
+            break;
+        }
+        return task;
     }
 }

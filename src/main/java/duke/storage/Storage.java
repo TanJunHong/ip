@@ -2,8 +2,8 @@ package duke.storage;
 
 import duke.data.TaskList;
 import duke.data.exception.DukeException;
-import duke.parser.Parser;
 import duke.data.task.Task;
+import duke.parser.Parser;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -7,9 +7,8 @@ import java.util.Scanner;
 
 public class Ui {
 
-    private Scanner in = new Scanner(System.in);
-
     private static final String DOTTED_LINE = "____________________________________________________________";
+    private final Scanner in = new Scanner(System.in);
 
     private void printWithIndent(String string) {
         System.out.println("\t " + string);
