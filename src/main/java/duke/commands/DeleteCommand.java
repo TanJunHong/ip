@@ -8,12 +8,13 @@ import duke.ui.Ui;
 
 public class DeleteCommand extends Command {
 
+    public static final String COMMAND_WORD = "delete";
+
     private final int index;
 
     public DeleteCommand(int index) {
         this.index = index;
     }
-
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {

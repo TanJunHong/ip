@@ -46,7 +46,7 @@ public class Ui {
     }
 
     public void showLoadingError() {
-        showError("Cannot read file.");
+        showError("Error loading file.");
     }
 
     public String readCommand() {

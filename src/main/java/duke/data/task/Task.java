@@ -1,12 +1,11 @@
 package duke.data.task;
 
-public class Task {
+public abstract class Task {
 
+    public static final String COMPLETE = "1";
+    public static final String INCOMPLETE = "0";
     private static final String TICK = "[✓]";
     private static final String CROSS = "[✗]";
-    private static final int COMPLETE = 1;
-    private static final int INCOMPLETE = 0;
-
     private final String description;
     private boolean isDone;
 

@@ -7,6 +7,8 @@ import duke.ui.Ui;
 
 public class DoneCommand extends Command {
 
+    public static final String COMMAND_WORD = "done";
+
     private final int index;
 
     public DoneCommand(int index) {

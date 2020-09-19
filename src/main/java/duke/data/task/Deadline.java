@@ -2,7 +2,8 @@ package duke.data.task;
 
 public class Deadline extends Task {
 
-    private static final String LOGO = "D";
+    public static final String LOGO = "D";
+    public static final String DELIMITER = "/by";
 
     private final String by;
 

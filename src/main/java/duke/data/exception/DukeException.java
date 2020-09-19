@@ -2,7 +2,7 @@ package duke.data.exception;
 
 public class DukeException extends Exception {
 
-    public DukeException(String errorMessage) {
-        super("☹ OOPS!!! " + errorMessage);
+    public DukeException(String message) {
+        super("☹ OOPS!!! " + message);
     }
 }

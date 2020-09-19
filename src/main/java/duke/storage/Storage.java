@@ -44,7 +44,7 @@ public class Storage {
                     tasks.add(task);
                 }
             } catch (IOException e) {
-                throw new DukeException("Error reading file!");
+                throw new DukeException("Error reading file.");
             }
         }
 
@@ -60,7 +60,7 @@ public class Storage {
 
         Path folderPath = Paths.get(folder);
         if (!Files.exists(folderPath) && !new File(folder).mkdir()) {
-            throw new DukeException("Error creating directory!");
+            throw new DukeException("Error creating directory.");
         }
 
         Path filePath = Paths.get(folder, file);
@@ -69,7 +69,7 @@ public class Storage {
             bufferedWriter.write(fileContent.toString());
             bufferedWriter.close();
         } catch (IOException e) {
-            throw new DukeException("Error Writing File");
+            throw new DukeException("Error writing file.");
         }
     }
 }

@@ -2,7 +2,8 @@ package duke.data.task;
 
 public class Event extends Task {
 
-    private static final String LOGO = "E";
+    public static final String LOGO = "E";
+    public static final String DELIMITER = "/at";
 
     private final String at;
 
