@@ -2,8 +2,8 @@ package duke.data.task;
 
 public class Task {
 
-    private static final String TICK = "[\u2713]";
-    private static final String CROSS = "[\u2718]";
+    private static final String TICK = "[✓]";
+    private static final String CROSS = "[✗]";
     private static final int COMPLETE = 1;
     private static final int INCOMPLETE = 0;
 
