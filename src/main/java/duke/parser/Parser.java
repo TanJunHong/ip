@@ -12,8 +12,7 @@ public class Parser {
     private final static int MAX_INSTRUCTION_LENGTH = 3;
 
     public static Command parse(String fullCommand) throws DukeException {
-
-        String[] instructions = fullCommand.split(" ", 2);
+        String[] instructions = fullCommand.split(" ", MAX_INSTRUCTION_LENGTH - 1);
 
         String commandWord = instructions[0].trim().toLowerCase();
         String[] furtherInstructions;
@@ -24,49 +23,41 @@ public class Parser {
         Task task;
 
         switch (commandWord) {
-        case "list":
+        case ListCommand.COMMAND_WORD:
             command = new ListCommand();
             break;
-        case "bye":
+        case ExitCommand.COMMAND_WORD:
             command = new ExitCommand();
             break;
-        case "todo":
+        case AddCommand.TODO_COMMAND_WORD:
             verifyInstruction(instructions);
             description = instructions[1].trim();
             task = new ToDo(description, false);
             command = new AddCommand(task);
             break;
-        case "deadline":
-            furtherInstructions = splitDescriptionAndDateTime(instructions[1], "/by");
+        case AddCommand.DEADLINE_COMMAND_WORD:
+            furtherInstructions = splitDescriptionAndDateTime(instructions[1], Deadline.DELIMITER);
             description = furtherInstructions[0].trim();
             String by = furtherInstructions[1].trim();
             task = new Deadline(description, false, by);
             command = new AddCommand(task);
             break;
-        case "event":
-            furtherInstructions = splitDescriptionAndDateTime(instructions[1], "/at");
+        case AddCommand.EVENT_COMMAND_WORD:
+            furtherInstructions = splitDescriptionAndDateTime(instructions[1], Event.DELIMITER);
             description = furtherInstructions[0].trim();
             String at = furtherInstructions[1].trim();
             task = new Event(description, false, at);
             command = new AddCommand(task);
             break;
-        case "done":
+        case DoneCommand.COMMAND_WORD:
             verifyInstruction(instructions);
-            try {
-                taskNumber = Integer.parseInt(instructions[1]);
-                command = new DoneCommand(taskNumber - 1);
-            } catch (NumberFormatException e) {
-                throw new DukeException("Task number cannot be non-numeric.");
-            }
+            taskNumber = convertToNumber(instructions[1]);
+            command = new DoneCommand(taskNumber - 1);
             break;
-        case "delete":
+        case DeleteCommand.COMMAND_WORD:
             verifyInstruction(instructions);
-            try {
-                taskNumber = Integer.parseInt(instructions[1]);
-                command = new DeleteCommand(taskNumber - 1);
-            } catch (NumberFormatException e) {
-                throw new DukeException("Task number cannot be non-numeric.");
-            }
+            taskNumber = convertToNumber(instructions[1]);
+            command = new DeleteCommand(taskNumber - 1);
             break;
         default:
             throw new DukeException("I'm sorry, but I don't know what that means :-(");
@@ -74,11 +65,21 @@ public class Parser {
         return command;
     }
 
+    private static int convertToNumber(String instruction) throws DukeException {
+        int taskNumber;
+
+        try {
+            taskNumber = Integer.parseInt(instruction);
+        } catch (NumberFormatException e) {
+            throw new DukeException("Task number cannot be non-numeric.");
+        }
+
+        return taskNumber;
+    }
+
     private static String[] splitDescriptionAndDateTime(String line, String delimiter) throws DukeException {
         String[] instructions = line.split(delimiter, 2);
-
         verifyInstruction(instructions);
-
         return new String[]{instructions[0].trim(), instructions[1].trim()};
     }
 
@@ -90,30 +91,49 @@ public class Parser {
         }
     }
 
-    public Task readTask(String line) {
+    public Task readTask(String line) throws DukeException {
         String[] instructions = line.split("\\|", MAX_INSTRUCTION_LENGTH + 1);
+        verifyInstructionLength(instructions, MAX_INSTRUCTION_LENGTH);
 
         String taskType = instructions[0].trim();
-        boolean isDone = instructions[1].trim().equals("1");
+        boolean isDone;
         String description = instructions[2].trim();
         Task task;
 
+        switch (instructions[1].trim()) {
+        case Task.COMPLETE:
+            isDone = true;
+            break;
+        case Task.INCOMPLETE:
+            isDone = false;
+            break;
+        default:
+            throw new DukeException("Unable to read task completion status.");
+        }
+
         switch (taskType) {
-        case "D":
+        case Deadline.LOGO:
+            verifyInstructionLength(instructions, MAX_INSTRUCTION_LENGTH + 1);
             String by = instructions[3].trim();
             task = new Deadline(description, isDone, by);
             break;
-        case "E":
+        case Event.LOGO:
+            verifyInstructionLength(instructions, MAX_INSTRUCTION_LENGTH + 1);
             String at = instructions[3].trim();
             task = new Event(description, isDone, at);
             break;
-        case "T":
+        case ToDo.LOGO:
             task = new ToDo(description, isDone);
             break;
         default:
-            task = null;
-            break;
+            throw new DukeException("Unable to read task type.");
         }
         return task;
+    }
+
+    private void verifyInstructionLength(String[] instructions, int instructionLength) throws DukeException {
+        if (instructions.length < instructionLength) {
+            throw new DukeException("Missing parameter(s) for task.");
+        }
     }
 }

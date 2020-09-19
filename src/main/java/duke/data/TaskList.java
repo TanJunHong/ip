@@ -9,23 +9,25 @@ public class TaskList {
 
     private final ArrayList<Task> tasks;
 
-    public TaskList(ArrayList<Task> tasks) {
-        this.tasks = tasks;
-    }
-
     public TaskList() {
         tasks = new ArrayList<>();
     }
 
-    public Task getTask(int index) throws DukeException {
-        if (index < 0 || index >= tasks.size()) {
-            throw new DukeException("Task number cannot be out of range.");
-        }
-        return tasks.get(index);
+    public TaskList(ArrayList<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public int getSize() {
         return tasks.size();
+    }
+
+    public Task getTask(int index) throws DukeException {
+        verifyTaskNumber(index);
+        return tasks.get(index);
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
     }
 
     public void addTask(Task task) {
@@ -36,14 +38,14 @@ public class TaskList {
         tasks.remove(index);
     }
 
-    public ArrayList<Task> getTasks() {
-        return tasks;
+    public void markTaskAsDone(int index) throws DukeException {
+        verifyTaskNumber(index);
+        tasks.get(index).markAsDone();
     }
 
-    public void markTaskAsDone(int index) throws DukeException {
+    private void verifyTaskNumber(int index) throws DukeException {
         if (index < 0 || index >= tasks.size()) {
             throw new DukeException("Task number cannot be out of range.");
         }
-        tasks.get(index).markAsDone();
     }
 }
