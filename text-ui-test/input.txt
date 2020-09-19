@@ -13,6 +13,7 @@ blah
 done 0
 done 100
 done abc
+todo
 deadline a
 deadline /by
 deadline return book /by
