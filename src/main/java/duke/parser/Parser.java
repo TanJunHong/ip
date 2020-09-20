@@ -28,7 +28,15 @@ public class Parser {
 
         switch (commandWord) {
         case ListCommand.COMMAND_WORD:
-            command = new ListCommand();
+            LocalDate date = null;
+            LocalTime time = null;
+            if (instructions.length > 1) {
+                String dateTimeFilter = instructions[1].trim();
+                Object[] dateTime = parseDateTime(dateTimeFilter);
+                date = (LocalDate) dateTime[0];
+                time = (LocalTime) dateTime[1];
+            }
+            command = new ListCommand(date, time);
             break;
         case ExitCommand.COMMAND_WORD:
             command = new ExitCommand();

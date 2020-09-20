@@ -3,7 +3,10 @@ package duke.data;
 import duke.data.exception.DukeException;
 import duke.data.task.Task;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class TaskList {
 
@@ -26,8 +29,11 @@ public class TaskList {
         return tasks.get(index);
     }
 
-    public ArrayList<Task> getTasks() {
-        return tasks;
+    public ArrayList<Task> getTasks(LocalDate date, LocalTime time) {
+        return (ArrayList<Task>) tasks.stream()
+                .filter(task -> date == null || date.equals(task.getDate()))
+                .filter(task -> time == null || time.equals(task.getTime()))
+                .collect(Collectors.toList());
     }
 
     public void addTask(Task task) {
