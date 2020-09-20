@@ -14,17 +14,31 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * Stores tasks into file and loads tasks from file.
+ */
 public class Storage {
 
     private final String folder;
     private final String file;
 
+    /**
+     * Initializes path of folder and file.
+     *
+     * @param filePath Full file path.
+     */
     public Storage(String filePath) {
         int index = filePath.lastIndexOf("/");
         folder = filePath.substring(0, index);
         file = filePath.substring(index + 1);
     }
 
+    /**
+     * Loads tasks, stores them into ArrayList and returns the ArrayList.
+     *
+     * @return ArrayList of tasks.
+     * @throws DukeException If there is problem reading file.
+     */
     public ArrayList<Task> load() throws DukeException {
         Path path = Paths.get(folder, file);
         ArrayList<Task> tasks = new ArrayList<>();
@@ -51,6 +65,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves tasks into file.
+     *
+     * @param tasks ArrayList of tasks to save.
+     * @throws DukeException If there is problem writing or saving file.
+     */
     public void save(TaskList tasks) throws DukeException {
         StringBuilder fileContent = new StringBuilder();
 
