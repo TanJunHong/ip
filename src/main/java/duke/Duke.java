@@ -7,12 +7,20 @@ import duke.parser.Parser;
 import duke.storage.Storage;
 import duke.ui.Ui;
 
+/**
+ * Personal assistant chat bot.
+ */
 public class Duke {
 
     private final Storage storage;
     private final Ui ui;
     private TaskList tasks;
 
+    /**
+     * Initializes chat bot.
+     *
+     * @param filePath Path to store and load tasks.
+     */
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -24,10 +32,18 @@ public class Duke {
         }
     }
 
+    /**
+     * Starts Duke.
+     *
+     * @param args Command line argument.
+     */
     public static void main(String[] args) {
         new Duke("data/tasks.txt").run();
     }
 
+    /**
+     * Runs Duke.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
