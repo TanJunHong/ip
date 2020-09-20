@@ -16,13 +16,13 @@
 
 	____________________________________________________________
 	 Got it. I've added this task:
-	   [D][✗] return book (by: June 6th)
+	   [D][✗] return book (by: Jun 6 2020)
 	 Now you have 2 tasks in the list.
 	____________________________________________________________
 
 	____________________________________________________________
 	 Got it. I've added this task:
-	   [E][✗] project meeting (at: Aug 6th 2-4pm)
+	   [E][✗] project meeting (at: Aug 6 2020 14:00)
 	 Now you have 3 tasks in the list.
 	____________________________________________________________
 
@@ -46,21 +46,21 @@
 	____________________________________________________________
 	 Here are the tasks in your list:
 	 1.[T][✓] read book
-	 2.[D][✗] return book (by: June 6th)
-	 3.[E][✗] project meeting (at: Aug 6th 2-4pm)
+	 2.[D][✗] return book (by: Jun 6 2020)
+	 3.[E][✗] project meeting (at: Aug 6 2020 14:00)
 	 4.[T][✓] join sports club
 	 5.[T][✗] borrow book
 	____________________________________________________________
 
 	____________________________________________________________
 	 Got it. I've added this task:
-	   [D][✗] return book (by: Sunday)
+	   [D][✗] return book (by: Sep 20 2020)
 	 Now you have 6 tasks in the list.
 	____________________________________________________________
 
 	____________________________________________________________
 	 Got it. I've added this task:
-	   [E][✗] project meeting (at: Mon 2-4pm)
+	   [E][✗] project meeting (at: Sep 21 2020 14:00)
 	 Now you have 7 tasks in the list.
 	____________________________________________________________
 
@@ -105,6 +105,14 @@
 	____________________________________________________________
 
 	____________________________________________________________
+	 ☹ OOPS!!! Error parsing date/time
+	____________________________________________________________
+
+	____________________________________________________________
+	 ☹ OOPS!!! Error parsing date/time
+	____________________________________________________________
+
+	____________________________________________________________
 	 ☹ OOPS!!! Task number cannot be out of range.
 	____________________________________________________________
 
@@ -121,11 +129,11 @@
 	____________________________________________________________
 	 Here are the tasks in your list:
 	 1.[T][✓] read book
-	 2.[D][✗] return book (by: June 6th)
-	 3.[E][✗] project meeting (at: Aug 6th 2-4pm)
+	 2.[D][✗] return book (by: Jun 6 2020)
+	 3.[E][✗] project meeting (at: Aug 6 2020 14:00)
 	 4.[T][✗] borrow book
-	 5.[D][✗] return book (by: Sunday)
-	 6.[E][✗] project meeting (at: Mon 2-4pm)
+	 5.[D][✗] return book (by: Sep 20 2020)
+	 6.[E][✗] project meeting (at: Sep 21 2020 14:00)
 	____________________________________________________________
 
 	____________________________________________________________
