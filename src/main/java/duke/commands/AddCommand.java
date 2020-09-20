@@ -6,6 +6,9 @@ import duke.data.task.Task;
 import duke.storage.Storage;
 import duke.ui.Ui;
 
+/**
+ * Adds a task to Duke.
+ */
 public class AddCommand extends Command {
 
     public static final String TODO_COMMAND_WORD = "todo";
@@ -14,10 +17,23 @@ public class AddCommand extends Command {
 
     private final Task task;
 
+    /**
+     * Initializes task to add.
+     *
+     * @param task Task to add.
+     */
     public AddCommand(Task task) {
         this.task = task;
     }
 
+    /**
+     * Adds a task, shows the task and saves list of tasks into file.
+     *
+     * @param tasks TaskList class.
+     * @param ui Ui class.
+     * @param storage Storage class.
+     * @throws DukeException If there is issue adding task.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         tasks.addTask(task);
