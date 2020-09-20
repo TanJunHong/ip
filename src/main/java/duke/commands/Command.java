@@ -32,7 +32,7 @@ public abstract class Command {
     /**
      * Returns Duke's exit status.
      *
-     * @return exit status.
+     * @return Exit status.
      */
     public boolean isExit() {
         return isExit;
