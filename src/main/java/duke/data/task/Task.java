@@ -10,16 +10,19 @@ public abstract class Task {
     private static final String TICK = "[✓]";
     private static final String CROSS = "[✗]";
 
+    private static int numberOfTasks = 0;
+    private final int taskNumber;
     private final String description;
-    private boolean isDone;
     private final LocalDate date;
     private final LocalTime time;
+    private boolean isDone;
 
     Task(String description, boolean isDone, LocalDate date, LocalTime time) {
         this.description = description;
         this.isDone = isDone;
         this.date = date;
         this.time = time;
+        taskNumber = ++numberOfTasks;
     }
 
     public void markAsDone() {
@@ -40,6 +43,10 @@ public abstract class Task {
 
     private String getStatusIcon() {
         return isDone ? TICK : CROSS;
+    }
+
+    public int getTaskNumber() {
+        return taskNumber;
     }
 
     public String getFormattedTask() {

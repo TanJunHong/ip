@@ -70,12 +70,12 @@ public class Parser {
         case DoneCommand.COMMAND_WORD:
             verifyInstruction(instructions);
             taskNumber = convertToNumber(instructions[1]);
-            command = new DoneCommand(taskNumber - 1);
+            command = new DoneCommand(taskNumber);
             break;
         case DeleteCommand.COMMAND_WORD:
             verifyInstruction(instructions);
             taskNumber = convertToNumber(instructions[1]);
-            command = new DeleteCommand(taskNumber - 1);
+            command = new DeleteCommand(taskNumber);
             break;
         default:
             throw new DukeException("I'm sorry, but I don't know what that means :-(");
