@@ -18,7 +18,7 @@ public abstract class Task {
         this.isDone = true;
     }
 
-    private String getDescription() {
+    public String getDescription() {
         return description;
     }
 

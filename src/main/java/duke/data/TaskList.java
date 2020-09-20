@@ -4,6 +4,7 @@ import duke.data.exception.DukeException;
 import duke.data.task.Task;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class TaskList {
 
@@ -28,6 +29,12 @@ public class TaskList {
 
     public ArrayList<Task> getTasks() {
         return tasks;
+    }
+
+    public ArrayList<Task> getTasks(String keyword) {
+        return (ArrayList<Task>) tasks.stream()
+                .filter(task -> task.getDescription().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     public void addTask(Task task) {
