@@ -5,7 +5,7 @@ public class ToDo extends Task {
     public static final String LOGO = "T";
 
     public ToDo(String description, boolean isDone) {
-        super(description, isDone);
+        super(description, isDone, null, null);
     }
 
     @Override

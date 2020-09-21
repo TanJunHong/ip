@@ -55,7 +55,7 @@ public class Storage {
         StringBuilder fileContent = new StringBuilder();
 
         for (int i = 0; i < tasks.getSize(); i++) {
-            fileContent.append(tasks.getTask(i).getFormattedTask());
+            fileContent.append(tasks.getTaskUsingIndex(i).getFormattedTask());
         }
 
         Path folderPath = Paths.get(folder);

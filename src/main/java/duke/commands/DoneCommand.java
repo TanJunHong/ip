@@ -9,16 +9,16 @@ public class DoneCommand extends Command {
 
     public static final String COMMAND_WORD = "done";
 
-    private final int index;
+    private final int taskNumber;
 
-    public DoneCommand(int index) {
-        this.index = index;
+    public DoneCommand(int taskNumber) {
+        this.taskNumber = taskNumber;
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
-        tasks.markTaskAsDone(index);
-        ui.showDone(tasks.getTask(index));
+        tasks.markTaskAsDone(taskNumber);
+        ui.showDone(tasks.getTask(taskNumber));
         storage.save(tasks);
     }
 }
