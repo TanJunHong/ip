@@ -55,15 +55,15 @@ public class Ui {
      */
     public void showList(ArrayList<Task> tasks) {
         printWithIndent("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            printWithIndent((i + 1) + "." + tasks.get(i));
+        for (Task task : tasks) {
+            printWithIndent(task.getTaskNumber() + "." + task);
         }
     }
 
     /**
-     * Prints task marked as done.
+     * Prints task with done as completion status.
      *
-     * @param task Task marked as done.
+     * @param task Task marked with done as completion status.
      */
     public void showDone(Task task) {
         printWithIndent("Nice! I've marked this task as done:");
@@ -116,5 +116,17 @@ public class Ui {
         printWithIndent("Noted. I've removed this task:");
         printWithIndent("  " + task);
         printWithIndent("Now you have " + size + " tasks in the list.");
+    }
+
+    /**
+     * Prints results of finding keyword.
+     *
+     * @param tasks Tasks containing keyword.
+     */
+    public void showFind(ArrayList<Task> tasks) {
+        printWithIndent("Here are the matching tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            printWithIndent((i + 1) + "." + tasks.get(i));
+        }
     }
 }

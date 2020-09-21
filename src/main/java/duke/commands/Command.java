@@ -13,7 +13,7 @@ public abstract class Command {
     boolean isExit;
 
     /**
-     * Initializes command to execute.
+     * Initializes command to execute and set exit status to false.
      */
     public Command() {
         isExit = false;
@@ -22,9 +22,9 @@ public abstract class Command {
     /**
      * Executes command.
      *
-     * @param tasks TaskList class.
-     * @param ui Ui class.
-     * @param storage Storage class.
+     * @param tasks   TaskList object.
+     * @param ui      Ui object.
+     * @param storage Storage object.
      * @throws DukeException If there is issue executing command.
      */
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException;

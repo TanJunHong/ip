@@ -3,7 +3,10 @@ package duke.data;
 import duke.data.exception.DukeException;
 import duke.data.task.Task;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Stores tasks in ArrayList.
@@ -38,24 +41,51 @@ public class TaskList {
     }
 
     /**
+     * Returns task of corresponding task number.
+     *
+     * @param taskNumber Task number of task.
+     * @return Task of the corresponding task number.
+     * @throws DukeException If task number does not exist.
+     */
+    public Task getTask(int taskNumber) throws DukeException {
+        int index = findTaskIndex(taskNumber);
+        return getTaskUsingIndex(index);
+    }
+
+    /**
      * Returns task using index.
      *
      * @param index Index of task.
      * @return Task at that index.
-     * @throws DukeException If index is invalid.
      */
-    public Task getTask(int index) throws DukeException {
-        verifyTaskNumber(index);
+    public Task getTaskUsingIndex(int index) {
         return tasks.get(index);
     }
 
     /**
-     * Returns ArrayList of tasks.
+     * Returns ArrayList of tasks that are of corresponding date & time.
      *
-     * @return Tasks as ArrayList.
+     * @param date Date of task.
+     * @param time Time of task.
+     * @return Tasks with corresponding date & time.
      */
-    public ArrayList<Task> getTasks() {
-        return tasks;
+    public ArrayList<Task> getTasks(LocalDate date, LocalTime time) {
+        return (ArrayList<Task>) tasks.stream()
+                .filter(task -> date == null || date.equals(task.getDate()))
+                .filter(task -> time == null || time.equals(task.getTime()))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns ArrayList of tasks that contains keyword.
+     *
+     * @param keyword Keyword to search.
+     * @return Tasks that contains keyword.
+     */
+    public ArrayList<Task> getTasks(String keyword) {
+        return (ArrayList<Task>) tasks.stream()
+                .filter(task -> task.getDescription().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -68,34 +98,40 @@ public class TaskList {
     }
 
     /**
-     * Removes task using index.
+     * Removes task from tasks ArrayList.
      *
-     * @param index Index of task to remove.
+     * @param taskNumber Task number of task to remove.
+     * @throws DukeException If task number is invalid.
      */
-    public void deleteTask(int index) {
+    public void deleteTask(int taskNumber) throws DukeException {
+        int index = findTaskIndex(taskNumber);
         tasks.remove(index);
     }
 
     /**
-     * Marks task as done using index.
+     * Marks task as done.
      *
-     * @param index Index of task to mark as done.
-     * @throws DukeException If index is invalid.
+     * @param taskNumber Task number of task to mark as done.
+     * @throws DukeException If task number is invalid.
      */
-    public void markTaskAsDone(int index) throws DukeException {
-        verifyTaskNumber(index);
+    public void markTaskAsDone(int taskNumber) throws DukeException {
+        int index = findTaskIndex(taskNumber);
         tasks.get(index).markAsDone();
     }
 
     /**
-     * Checks if index of task is valid.
+     * Returns index of task using task number.
      *
-     * @param index Index of task to check.
-     * @throws DukeException If index is invalid.
+     * @param taskNumber Task number of task to find index.
+     * @return Index of task.
+     * @throws DukeException If task number is invalid.
      */
-    private void verifyTaskNumber(int index) throws DukeException {
-        if (index < 0 || index >= tasks.size()) {
-            throw new DukeException("Task number cannot be out of range.");
+    private int findTaskIndex(int taskNumber) throws DukeException {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getTaskNumber() == taskNumber) {
+                return i;
+            }
         }
+        throw new DukeException("Invalid task number.");
     }
 }

@@ -1,11 +1,16 @@
 package duke.parser;
 
+
 import duke.commands.*;
 import duke.data.exception.DukeException;
 import duke.data.task.Deadline;
 import duke.data.task.Event;
 import duke.data.task.Task;
 import duke.data.task.ToDo;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 /**
  * Parses user input and file.
@@ -34,7 +39,20 @@ public class Parser {
 
         switch (commandWord) {
         case ListCommand.COMMAND_WORD:
-            command = new ListCommand();
+            LocalDate date = null;
+            LocalTime time = null;
+            if (instructions.length > 1) {
+                String dateTimeFilter = instructions[1].trim();
+                Object[] dateTime = parseDateTime(dateTimeFilter);
+                date = (LocalDate) dateTime[0];
+                time = (LocalTime) dateTime[1];
+            }
+            command = new ListCommand(date, time);
+            break;
+        case FindCommand.COMMAND_WORD:
+            verifyInstruction(instructions);
+            String keyword = instructions[1].trim();
+            command = new FindCommand(keyword);
             break;
         case ExitCommand.COMMAND_WORD:
             command = new ExitCommand();
@@ -49,25 +67,31 @@ public class Parser {
             furtherInstructions = splitDescriptionAndDateTime(instructions[1], Deadline.DELIMITER);
             description = furtherInstructions[0].trim();
             String by = furtherInstructions[1].trim();
-            task = new Deadline(description, false, by);
+            Object[] byDateTime = parseDateTime(by);
+            LocalDate byDate = (LocalDate) byDateTime[0];
+            LocalTime byTime = (LocalTime) byDateTime[1];
+            task = new Deadline(description, false, byDate, byTime);
             command = new AddCommand(task);
             break;
         case AddCommand.EVENT_COMMAND_WORD:
             furtherInstructions = splitDescriptionAndDateTime(instructions[1], Event.DELIMITER);
             description = furtherInstructions[0].trim();
             String at = furtherInstructions[1].trim();
-            task = new Event(description, false, at);
+            Object[] atDateTime = parseDateTime(at);
+            LocalDate atDate = (LocalDate) atDateTime[0];
+            LocalTime atTime = (LocalTime) atDateTime[1];
+            task = new Event(description, false, atDate, atTime);
             command = new AddCommand(task);
             break;
         case DoneCommand.COMMAND_WORD:
             verifyInstruction(instructions);
             taskNumber = convertToNumber(instructions[1]);
-            command = new DoneCommand(taskNumber - 1);
+            command = new DoneCommand(taskNumber);
             break;
         case DeleteCommand.COMMAND_WORD:
             verifyInstruction(instructions);
             taskNumber = convertToNumber(instructions[1]);
-            command = new DeleteCommand(taskNumber - 1);
+            command = new DeleteCommand(taskNumber);
             break;
         default:
             throw new DukeException("I'm sorry, but I don't know what that means :-(");
@@ -95,9 +119,30 @@ public class Parser {
     }
 
     /**
+     * Parses string into date & time.
+     *
+     * @param line String to parse.
+     * @return Object array containing date & time.
+     * @throws DukeException If parsing fails.
+     */
+    private static Object[] parseDateTime(String line) throws DukeException {
+        try {
+            String[] dateTimeString = line.split(" ", 2);
+            LocalDate date = LocalDate.parse(dateTimeString[0].trim());
+            LocalTime time = null;
+            if (dateTimeString.length == 2) {
+                time = LocalTime.parse(dateTimeString[1].trim());
+            }
+            return new Object[]{date, time};
+        } catch (DateTimeParseException e) {
+            throw new DukeException("Error parsing date/time");
+        }
+    }
+
+    /**
      * Splits description and date/time, and returns array containing both.
      *
-     * @param line String to split.
+     * @param line      String to split.
      * @param delimiter Delimiter for splitting.
      * @return String array containing description and date/time.
      * @throws DukeException If date/time does not exist, or unable to decipher either description or date/time.
@@ -153,12 +198,18 @@ public class Parser {
         case Deadline.LOGO:
             verifyInstructionLength(instructions, MAX_INSTRUCTION_LENGTH + 1);
             String by = instructions[3].trim();
-            task = new Deadline(description, isDone, by);
+            Object[] byDateTime = parseDateTime(by);
+            LocalDate byDate = (LocalDate) byDateTime[0];
+            LocalTime byTime = (LocalTime) byDateTime[1];
+            task = new Deadline(description, isDone, byDate, byTime);
             break;
         case Event.LOGO:
             verifyInstructionLength(instructions, MAX_INSTRUCTION_LENGTH + 1);
             String at = instructions[3].trim();
-            task = new Event(description, isDone, at);
+            Object[] atDateTime = parseDateTime(at);
+            LocalDate atDate = (LocalDate) atDateTime[0];
+            LocalTime atTime = (LocalTime) atDateTime[1];
+            task = new Event(description, isDone, atDate, atTime);
             break;
         case ToDo.LOGO:
             task = new ToDo(description, isDone);
@@ -172,7 +223,7 @@ public class Parser {
     /**
      * Checks if instructions length is correct.
      *
-     * @param instructions Array of string.
+     * @param instructions      Array of string.
      * @param instructionLength Correct length of array.
      * @throws DukeException If array length is less than correct length.
      */

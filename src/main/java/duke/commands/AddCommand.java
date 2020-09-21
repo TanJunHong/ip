@@ -29,9 +29,9 @@ public class AddCommand extends Command {
     /**
      * Adds a task, shows the task and saves list of tasks into file.
      *
-     * @param tasks TaskList class.
-     * @param ui Ui class.
-     * @param storage Storage class.
+     * @param tasks   TaskList object.
+     * @param ui      Ui object.
+     * @param storage Storage object.
      * @throws DukeException If there is issue adding task.
      */
     @Override

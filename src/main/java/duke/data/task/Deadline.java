@@ -1,5 +1,9 @@
 package duke.data.task;
 
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  * Deadline task.
  */
@@ -8,18 +12,16 @@ public class Deadline extends Task {
     public static final String LOGO = "D";
     public static final String DELIMITER = "/by";
 
-    private final String by;
-
     /**
-     * Initializes deadline.
+     * Initializes deadline task.
      *
      * @param description Description of deadline.
-     * @param isDone Completion status of deadline.
-     * @param by Date/Time to complete deadline.
+     * @param isDone      Completion status of deadline.
+     * @param date        Date of deadline.
+     * @param time        Time of deadline.
      */
-    public Deadline(String description, boolean isDone, String by) {
-        super(description, isDone);
-        this.by = by;
+    public Deadline(String description, boolean isDone, LocalDate date, LocalTime time) {
+        super(description, isDone, date, time);
     }
 
     /**
@@ -29,7 +31,7 @@ public class Deadline extends Task {
      */
     @Override
     public String getFormattedTask() {
-        return LOGO + super.getFormattedTask() + " | " + by + System.lineSeparator();
+        return LOGO + super.getFormattedTask() + " | " + getDate() + getTimeString() + System.lineSeparator();
     }
 
     /**
@@ -39,6 +41,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[" + LOGO + "]" + super.toString() + " (by: " + by + ")";
+        return "[" + LOGO + "]" + super.toString() + " (by: " + getDateString() + getTimeString() + ")";
     }
 }

@@ -13,29 +13,29 @@ public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-    private final int index;
+    private final int taskNumber;
 
     /**
-     * Initializes the index of task to delete.
+     * Initializes the task number of task to delete.
      *
-     * @param index Index of task to delete.
+     * @param taskNumber Task number of task to delete.
      */
-    public DeleteCommand(int index) {
-        this.index = index;
+    public DeleteCommand(int taskNumber) {
+        this.taskNumber = taskNumber;
     }
 
     /**
      * Deletes a task, shows the task and saves remaining list of tasks into file.
      *
-     * @param tasks   TaskList class.
-     * @param ui      Ui class.
-     * @param storage Storage class.
-     * @throws DukeException  If there is issue deleting task.
+     * @param tasks   TaskList object.
+     * @param ui      Ui object.
+     * @param storage Storage object.
+     * @throws DukeException If there is issue deleting task.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
-        Task task = tasks.getTask(index);
-        tasks.deleteTask(index);
+        Task task = tasks.getTask(taskNumber);
+        tasks.deleteTask(taskNumber);
         ui.showDelete(task, tasks.getSize());
         storage.save(tasks);
     }

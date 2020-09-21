@@ -11,10 +11,10 @@ public class ToDo extends Task {
      * Initializes todo.
      *
      * @param description Description of todo.
-     * @param isDone Completion status of todo.
+     * @param isDone      Completion status of todo.
      */
     public ToDo(String description, boolean isDone) {
-        super(description, isDone);
+        super(description, isDone, null, null);
     }
 
     /**

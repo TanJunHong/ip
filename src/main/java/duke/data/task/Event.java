@@ -1,5 +1,9 @@
 package duke.data.task;
 
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  * Event task.
  */
@@ -8,18 +12,16 @@ public class Event extends Task {
     public static final String LOGO = "E";
     public static final String DELIMITER = "/at";
 
-    private final String at;
-
     /**
      * Initializes event.
      *
      * @param description Description of event.
-     * @param isDone Completion status of event.
-     * @param at Date/Time of event.
+     * @param isDone      Completion status of event.
+     * @param date        Date of event.
+     * @param time        Time of event.
      */
-    public Event(String description, boolean isDone, String at) {
-        super(description, isDone);
-        this.at = at;
+    public Event(String description, boolean isDone, LocalDate date, LocalTime time) {
+        super(description, isDone, date, time);
     }
 
     /**
@@ -29,7 +31,7 @@ public class Event extends Task {
      */
     @Override
     public String getFormattedTask() {
-        return LOGO + super.getFormattedTask() + " | " + at + System.lineSeparator();
+        return LOGO + super.getFormattedTask() + " | " + getDate() + getTimeString() + System.lineSeparator();
     }
 
     /**
@@ -39,6 +41,6 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[" + LOGO + "]" + super.toString() + " (at: " + at + ")";
+        return "[" + LOGO + "]" + super.toString() + " (at: " + getDateString() + getTimeString() + ")";
     }
 }

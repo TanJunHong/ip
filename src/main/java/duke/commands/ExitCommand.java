@@ -14,9 +14,9 @@ public class ExitCommand extends Command {
     /**
      * Says goodbye to user and exits Duke.
      *
-     * @param tasks   TaskList class.
-     * @param ui      Ui class.
-     * @param storage Storage class.
+     * @param tasks   TaskList object.
+     * @param ui      Ui object.
+     * @param storage Storage object.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
