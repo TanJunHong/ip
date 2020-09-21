@@ -37,7 +37,7 @@ public abstract class Task {
         return time;
     }
 
-    private String getDescription() {
+    public String getDescription() {
         return description;
     }
 

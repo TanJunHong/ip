@@ -38,6 +38,11 @@ public class Parser {
             }
             command = new ListCommand(date, time);
             break;
+        case FindCommand.COMMAND_WORD:
+            verifyInstruction(instructions);
+            String keyword = instructions[1].trim();
+            command = new FindCommand(keyword);
+            break;
         case ExitCommand.COMMAND_WORD:
             command = new ExitCommand();
             break;

@@ -40,6 +40,12 @@ public class TaskList {
                 .collect(Collectors.toList());
     }
 
+    public ArrayList<Task> getTasks(String keyword) {
+        return (ArrayList<Task>) tasks.stream()
+                .filter(task -> task.getDescription().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
     public void addTask(Task task) {
         tasks.add(task);
     }

@@ -65,4 +65,11 @@ public class Ui {
         printWithIndent("  " + task);
         printWithIndent("Now you have " + size + " tasks in the list.");
     }
+
+    public void showFind(ArrayList<Task> tasks) {
+        printWithIndent("Here are the matching tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            printWithIndent((i + 1) + "." + tasks.get(i));
+        }
+    }
 }
