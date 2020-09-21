@@ -31,8 +31,8 @@ public class Ui {
 
     public void showList(ArrayList<Task> tasks) {
         printWithIndent("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            printWithIndent((i + 1) + "." + tasks.get(i));
+        for (Task task : tasks) {
+            printWithIndent(task.getTaskNumber() + "." + task);
         }
     }
 
