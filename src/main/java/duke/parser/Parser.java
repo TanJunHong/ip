@@ -1,5 +1,6 @@
 package duke.parser;
 
+
 import duke.commands.*;
 import duke.data.exception.DukeException;
 import duke.data.task.Deadline;
@@ -11,10 +12,20 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parses user input and file.
+ */
 public class Parser {
 
     private final static int MAX_INSTRUCTION_LENGTH = 3;
 
+    /**
+     * Parses user input, and returns corresponding command.
+     *
+     * @param fullCommand String of user input to parse.
+     * @return Command to execute.
+     * @throws DukeException If command is invalid.
+     */
     public static Command parse(String fullCommand) throws DukeException {
         String[] instructions = fullCommand.split(" ", MAX_INSTRUCTION_LENGTH - 1);
 
@@ -88,6 +99,13 @@ public class Parser {
         return command;
     }
 
+    /**
+     * Converts string to integer and returns the number.
+     *
+     * @param instruction String to convert.
+     * @return Corresponding integer.
+     * @throws DukeException If string is non-numeric.
+     */
     private static int convertToNumber(String instruction) throws DukeException {
         int taskNumber;
 
@@ -100,6 +118,13 @@ public class Parser {
         return taskNumber;
     }
 
+    /**
+     * Parses string into date & time.
+     *
+     * @param line String to parse.
+     * @return Object array containing date & time.
+     * @throws DukeException If parsing fails.
+     */
     private static Object[] parseDateTime(String line) throws DukeException {
         try {
             String[] dateTimeString = line.split(" ", 2);
@@ -114,12 +139,26 @@ public class Parser {
         }
     }
 
+    /**
+     * Splits description and date/time, and returns array containing both.
+     *
+     * @param line      String to split.
+     * @param delimiter Delimiter for splitting.
+     * @return String array containing description and date/time.
+     * @throws DukeException If date/time does not exist, or unable to decipher either description or date/time.
+     */
     private static String[] splitDescriptionAndDateTime(String line, String delimiter) throws DukeException {
         String[] instructions = line.split(delimiter, 2);
         verifyInstruction(instructions);
         return new String[]{instructions[0].trim(), instructions[1].trim()};
     }
 
+    /**
+     * Verifies if instructions are valid.
+     *
+     * @param instructions Array to check.
+     * @throws DukeException If date/time does not exist, or unable to decipher either description or date/time.
+     */
     private static void verifyInstruction(String[] instructions) throws DukeException {
         if (instructions.length != MAX_INSTRUCTION_LENGTH - 1) {
             throw new DukeException("The description of a " + instructions[0] + " cannot be empty.");
@@ -128,6 +167,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Reads tasks from file.
+     *
+     * @param line Line of task to read.
+     * @return Task of corresponding line.
+     * @throws DukeException If task is incomplete or invalid.
+     */
     public Task readTask(String line) throws DukeException {
         String[] instructions = line.split("\\|", MAX_INSTRUCTION_LENGTH + 1);
         verifyInstructionLength(instructions, MAX_INSTRUCTION_LENGTH);
@@ -174,6 +220,13 @@ public class Parser {
         return task;
     }
 
+    /**
+     * Checks if instructions length is correct.
+     *
+     * @param instructions      Array of string.
+     * @param instructionLength Correct length of array.
+     * @throws DukeException If array length is less than correct length.
+     */
     private void verifyInstructionLength(String[] instructions, int instructionLength) throws DukeException {
         if (instructions.length < instructionLength) {
             throw new DukeException("Missing parameter(s) for task.");

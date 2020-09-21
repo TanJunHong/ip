@@ -1,33 +1,46 @@
 package duke.data.task;
 
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
+/**
+ * Event task.
+ */
 public class Event extends Task {
 
     public static final String LOGO = "E";
     public static final String DELIMITER = "/at";
 
+    /**
+     * Initializes event.
+     *
+     * @param description Description of event.
+     * @param isDone      Completion status of event.
+     * @param date        Date of event.
+     * @param time        Time of event.
+     */
     public Event(String description, boolean isDone, LocalDate date, LocalTime time) {
         super(description, isDone, date, time);
     }
 
-    private String getAtDateString() {
-        return getDate().format(DateTimeFormatter.ofPattern("MMM d yyyy"));
-    }
-
-    private String getAtTimeString() {
-        return getTime() == null ? "" : " " + getTime().toString();
-    }
-
+    /**
+     * Returns saving task format.
+     *
+     * @return String of task format for saving.
+     */
     @Override
     public String getFormattedTask() {
-        return LOGO + super.getFormattedTask() + " | " + getDate() + getAtTimeString() + System.lineSeparator();
+        return LOGO + super.getFormattedTask() + " | " + getDate() + getTimeString() + System.lineSeparator();
     }
 
+    /**
+     * Returns string version of task.
+     *
+     * @return Task string
+     */
     @Override
     public String toString() {
-        return "[" + LOGO + "]" + super.toString() + " (at: " + getAtDateString() + getAtTimeString() + ")";
+        return "[" + LOGO + "]" + super.toString() + " (at: " + getDateString() + getTimeString() + ")";
     }
 }
