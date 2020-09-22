@@ -12,6 +12,7 @@ Format: `todo TASK_DESCRIPTION`
 Examples:
 * `todo read book` adds a task with description `read book`.
 * `todo CS2113 iP User Guide` adds a task with description `CS2113 iP User Guide`.
+
 ---
 
 ### Adding a Deadline task : `deadline` 
@@ -25,6 +26,7 @@ Format: `deadline TASK_DESCRIPTION /by DATE TIME`
 Examples:
 * `deadline return book /by 2020-09-16 18:00` adds a deadline task with description `return book`, date `2020-09-16` and time `18:00`.
 * `deadline CS2113 tP User Guide /by 2020-09-17` adds a deadline task with description `CS2113 tP User Guide` and date `2020-09-17`.
+
 ---
 
 ### Adding an Event task : `event` 
@@ -38,6 +40,7 @@ Format: `event TASK_DESCRIPTION /at DATE TIME`
 Examples:
 * `event borrow book /at 2020-09-16` adds an event task with description `borrow book` and date `2020-09-16`.
 * `event CS2113 Tutorial /at 2020-09-17 16:00` adds an event task with description `CS2113 Tutorial`, date `2020-09-17` and time `16:00`.
+
 ---
 
 ### Deleting a task : `delete` 
@@ -50,6 +53,7 @@ Format: `delete TASK_NUMBER`
 Examples:
 * `delete 2` deletes a task with task number 2.
 * `delete 4` deletes a task with task number 4.
+
 ---
 
 ### Marking a task as done : `done` 
@@ -62,6 +66,7 @@ Format: `done TASK_NUMBER`
 Examples:
 * `done 2` deletes a task with task number 2.
 * `done 4` deletes a task with task number 4.
+
 ---
 
 ### Finding a task with keyword : `find` 
@@ -73,6 +78,7 @@ Format: `find KEYWORD`
 Examples:
 * `find book` lists tasks that have contain `book` keyword.
 * `find CS2113` lists tasks that have contain `CS2113` keyword.
+
 ---
 
 ### Listing tasks from task list using date/time : `list` 
@@ -86,6 +92,7 @@ Examples:
 * `list` lists all tasks.
 * `list 2020-09-09` lists all tasks that have date `2020-09-09`.
 * `list 2020-09-09 18:00` lists all tasks that have date `2020-09-09` and time `18:00`.
+
 ---
 
 ### Exits Duke : `bye` 
