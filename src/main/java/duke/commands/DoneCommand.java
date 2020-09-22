@@ -11,6 +11,7 @@ import duke.ui.Ui;
 public class DoneCommand extends Command {
 
     public static final String COMMAND_WORD = "done";
+    public static final String MESSAGE = "Nice! I've marked this task as done:";
 
     private final int taskNumber;
 

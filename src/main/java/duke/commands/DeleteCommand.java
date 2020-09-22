@@ -12,6 +12,7 @@ import duke.ui.Ui;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String MESSAGE = "Noted. I've removed this task:";
 
     private final int taskNumber;
 

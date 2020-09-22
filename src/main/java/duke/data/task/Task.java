@@ -16,10 +16,12 @@ public abstract class Task {
     private static final String CROSS = "[✗]";
 
     private static int numberOfTasks = 0;
+
     private final int taskNumber;
     private final String description;
     private final LocalDate date;
     private final LocalTime time;
+
     private boolean isDone;
 
     /**

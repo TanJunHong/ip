@@ -1,6 +1,14 @@
 package duke.ui;
 
+import duke.commands.AddCommand;
+import duke.commands.Command;
+import duke.commands.DeleteCommand;
+import duke.commands.DoneCommand;
+import duke.commands.ExitCommand;
+import duke.commands.FindCommand;
+import duke.commands.ListCommand;
 import duke.data.task.Task;
+import duke.storage.Storage;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,6 +19,7 @@ import java.util.Scanner;
 public class Ui {
 
     private static final String DOTTED_LINE = "____________________________________________________________";
+
     private final Scanner in = new Scanner(System.in);
 
     /**
@@ -43,8 +52,8 @@ public class Ui {
      */
     public void showWelcome() {
         showLine();
-        printWithIndent("Hello! I'm Duke");
-        printWithIndent("What can I do for you?");
+        printWithIndent(Command.FIRST_MESSAGE);
+        printWithIndent(Command.SECOND_MESSAGE);
         showLine();
     }
 
@@ -54,7 +63,7 @@ public class Ui {
      * @param tasks Tasks to print.
      */
     public void showList(ArrayList<Task> tasks) {
-        printWithIndent("Here are the tasks in your list:");
+        printWithIndent(ListCommand.MESSAGE);
         for (Task task : tasks) {
             printWithIndent(task.getTaskNumber() + "." + task);
         }
@@ -66,7 +75,7 @@ public class Ui {
      * @param task Task marked with done as completion status.
      */
     public void showDone(Task task) {
-        printWithIndent("Nice! I've marked this task as done:");
+        printWithIndent(DoneCommand.MESSAGE);
         printWithIndent("  " + task);
     }
 
@@ -74,14 +83,14 @@ public class Ui {
      * Prints exit message.
      */
     public void showExit() {
-        printWithIndent("Bye. Hope to see you again soon!");
+        printWithIndent(ExitCommand.MESSAGE);
     }
 
     /**
      * Prints loading error message.
      */
     public void showLoadingError() {
-        showError("Error loading file.");
+        showError(Storage.LOAD_ERROR);
     }
 
     /**
@@ -101,7 +110,7 @@ public class Ui {
      * @param size Size of tasks after added task.
      */
     public void showAdd(Task task, int size) {
-        printWithIndent("Got it. I've added this task:");
+        printWithIndent(AddCommand.MESSAGE);
         printWithIndent("  " + task);
         printWithIndent("Now you have " + size + " tasks in the list.");
     }
@@ -113,7 +122,7 @@ public class Ui {
      * @param size Size of tasks after deleted task.
      */
     public void showDelete(Task task, int size) {
-        printWithIndent("Noted. I've removed this task:");
+        printWithIndent(DeleteCommand.MESSAGE);
         printWithIndent("  " + task);
         printWithIndent("Now you have " + size + " tasks in the list.");
     }
@@ -124,7 +133,7 @@ public class Ui {
      * @param tasks Tasks containing keyword.
      */
     public void showFind(ArrayList<Task> tasks) {
-        printWithIndent("Here are the matching tasks in your list:");
+        printWithIndent(FindCommand.MESSAGE);
         for (int i = 0; i < tasks.size(); i++) {
             printWithIndent((i + 1) + "." + tasks.get(i));
         }

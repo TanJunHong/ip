@@ -13,7 +13,7 @@ import java.time.LocalTime;
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
-
+    public static final String MESSAGE = "Here are the tasks in your list:";
 
     private final LocalDate date;
     private final LocalTime time;

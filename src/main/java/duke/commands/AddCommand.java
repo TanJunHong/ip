@@ -14,6 +14,7 @@ public class AddCommand extends Command {
     public static final String TODO_COMMAND_WORD = "todo";
     public static final String DEADLINE_COMMAND_WORD = "deadline";
     public static final String EVENT_COMMAND_WORD = "event";
+    public static final String MESSAGE = "Got it. I've added this task:";
 
     private final Task task;
 

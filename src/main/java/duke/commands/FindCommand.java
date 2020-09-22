@@ -10,6 +10,7 @@ import duke.ui.Ui;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String MESSAGE = "Here are the matching tasks in your list:";
 
     private final String keyword;
 

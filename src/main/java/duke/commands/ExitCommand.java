@@ -10,6 +10,7 @@ import duke.ui.Ui;
 public class ExitCommand extends Command {
 
     public static final String COMMAND_WORD = "bye";
+    public static final String MESSAGE = "Bye. Hope to see you again soon!";
 
     /**
      * Says goodbye to user and exits Duke.

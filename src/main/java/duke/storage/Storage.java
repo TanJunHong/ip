@@ -19,6 +19,11 @@ import java.util.ArrayList;
  */
 public class Storage {
 
+    public static final String LOAD_ERROR = "Error loading file.";
+    private static final String READ_ERROR = "Error reading file.";
+    private static final String DIRECTORY_ERROR = "Error creating directory.";
+    private static final String WRITE_ERROR = "Error writing file.";
+
     private final String folder;
     private final String file;
 
@@ -57,7 +62,7 @@ public class Storage {
                     tasks.add(task);
                 }
             } catch (IOException e) {
-                throw new DukeException("Error reading file.");
+                throw new DukeException(READ_ERROR);
             }
         }
 
@@ -79,7 +84,7 @@ public class Storage {
 
         Path folderPath = Paths.get(folder);
         if (!Files.exists(folderPath) && !new File(folder).mkdir()) {
-            throw new DukeException("Error creating directory.");
+            throw new DukeException(DIRECTORY_ERROR);
         }
 
         Path filePath = Paths.get(folder, file);
@@ -88,7 +93,7 @@ public class Storage {
             bufferedWriter.write(fileContent.toString());
             bufferedWriter.close();
         } catch (IOException e) {
-            throw new DukeException("Error writing file.");
+            throw new DukeException(WRITE_ERROR);
         }
     }
 }

@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
  */
 public class TaskList {
 
+    private static final String TASK_NUMBER_ERROR = "Invalid task number.";
+
     private final ArrayList<Task> tasks;
 
     /**
@@ -132,6 +134,6 @@ public class TaskList {
                 return i;
             }
         }
-        throw new DukeException("Invalid task number.");
+        throw new DukeException(TASK_NUMBER_ERROR);
     }
 }

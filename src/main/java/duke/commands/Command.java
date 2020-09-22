@@ -10,6 +10,10 @@ import duke.ui.Ui;
  */
 public abstract class Command {
 
+    public static final String FIRST_MESSAGE = "Hello! I'm Duke";
+    public static final String SECOND_MESSAGE = "What can I do for you?";
+    public static final String COMMAND_ERROR = "I'm sorry, but I don't know what that means :-(";
+
     boolean isExit;
 
     /**

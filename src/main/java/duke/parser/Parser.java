@@ -23,6 +23,12 @@ import java.time.format.DateTimeParseException;
 public class Parser {
 
     private final static int MAX_INSTRUCTION_LENGTH = 3;
+    private final static String NUMERIC_ERROR = "Task number cannot be non-numeric.";
+    private final static String DATETIME_ERROR = "Error parsing date/time";
+    private final static String DECIPHER_ERROR = "Cannot decipher description or date/time.";
+    private final static String DONE_ERROR = "Unable to read task completion status.";
+    private final static String TYPE_ERROR = "Unable to read task type.";
+    private final static String PARAMETER_ERROR = "Missing parameter(s) for task.";
 
     /**
      * Parses user input, and returns corresponding command.
@@ -106,7 +112,7 @@ public class Parser {
             command = new DeleteCommand(taskNumber);
             break;
         default:
-            throw new DukeException("I'm sorry, but I don't know what that means :-(");
+            throw new DukeException(Command.COMMAND_ERROR);
         }
         return command;
     }
@@ -124,7 +130,7 @@ public class Parser {
         try {
             taskNumber = Integer.parseInt(instruction);
         } catch (NumberFormatException e) {
-            throw new DukeException("Task number cannot be non-numeric.");
+            throw new DukeException(NUMERIC_ERROR);
         }
 
         return taskNumber;
@@ -147,7 +153,7 @@ public class Parser {
             }
             return new Object[]{date, time};
         } catch (DateTimeParseException e) {
-            throw new DukeException("Error parsing date/time");
+            throw new DukeException(DATETIME_ERROR);
         }
     }
 
@@ -175,7 +181,7 @@ public class Parser {
         if (instructions.length != MAX_INSTRUCTION_LENGTH - 1) {
             throw new DukeException("The description of a " + instructions[0] + " cannot be empty.");
         } else if (instructions[0].isBlank() || instructions[1].isBlank()) {
-            throw new DukeException("Cannot decipher description or date/time.");
+            throw new DukeException(DECIPHER_ERROR);
         }
     }
 
@@ -203,7 +209,7 @@ public class Parser {
             isDone = false;
             break;
         default:
-            throw new DukeException("Unable to read task completion status.");
+            throw new DukeException(DONE_ERROR);
         }
 
         switch (taskType) {
@@ -227,7 +233,7 @@ public class Parser {
             task = new ToDo(description, isDone);
             break;
         default:
-            throw new DukeException("Unable to read task type.");
+            throw new DukeException(TYPE_ERROR);
         }
         return task;
     }
@@ -241,7 +247,7 @@ public class Parser {
      */
     private static void verifyInstructionLength(String[] instructions, int instructionLength) throws DukeException {
         if (instructions.length < instructionLength) {
-            throw new DukeException("Missing parameter(s) for task.");
+            throw new DukeException(PARAMETER_ERROR);
         }
     }
 }
