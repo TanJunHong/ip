@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
  */
 public abstract class Task {
 
+    public static final String INSTRUCTION_DELIMITER = " | ";
     public static final String COMPLETE = "1";
     public static final String INCOMPLETE = "0";
     private static final String TICK = "[✓]";
@@ -113,7 +114,7 @@ public abstract class Task {
      * @return String of task format for saving.
      */
     public String getFormattedTask() {
-        return " | " + (isDone ? COMPLETE : INCOMPLETE) + " | " + description;
+        return INSTRUCTION_DELIMITER + (isDone ? COMPLETE : INCOMPLETE) + INSTRUCTION_DELIMITER + description;
     }
 
     /**

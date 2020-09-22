@@ -1,7 +1,12 @@
 package duke.parser;
 
-
-import duke.commands.*;
+import duke.commands.AddCommand;
+import duke.commands.Command;
+import duke.commands.DeleteCommand;
+import duke.commands.DoneCommand;
+import duke.commands.ExitCommand;
+import duke.commands.FindCommand;
+import duke.commands.ListCommand;
 import duke.data.exception.DukeException;
 import duke.data.task.Deadline;
 import duke.data.task.Event;
@@ -47,11 +52,13 @@ public class Parser {
                 date = (LocalDate) dateTime[0];
                 time = (LocalTime) dateTime[1];
             }
+
             command = new ListCommand(date, time);
             break;
         case FindCommand.COMMAND_WORD:
             verifyInstruction(instructions);
             String keyword = instructions[1].trim();
+
             command = new FindCommand(keyword);
             break;
         case ExitCommand.COMMAND_WORD:
@@ -61,6 +68,7 @@ public class Parser {
             verifyInstruction(instructions);
             description = instructions[1].trim();
             task = new ToDo(description, false);
+
             command = new AddCommand(task);
             break;
         case AddCommand.DEADLINE_COMMAND_WORD:
@@ -71,6 +79,7 @@ public class Parser {
             LocalDate byDate = (LocalDate) byDateTime[0];
             LocalTime byTime = (LocalTime) byDateTime[1];
             task = new Deadline(description, false, byDate, byTime);
+
             command = new AddCommand(task);
             break;
         case AddCommand.EVENT_COMMAND_WORD:
@@ -81,16 +90,19 @@ public class Parser {
             LocalDate atDate = (LocalDate) atDateTime[0];
             LocalTime atTime = (LocalTime) atDateTime[1];
             task = new Event(description, false, atDate, atTime);
+
             command = new AddCommand(task);
             break;
         case DoneCommand.COMMAND_WORD:
             verifyInstruction(instructions);
             taskNumber = convertToNumber(instructions[1]);
+
             command = new DoneCommand(taskNumber);
             break;
         case DeleteCommand.COMMAND_WORD:
             verifyInstruction(instructions);
             taskNumber = convertToNumber(instructions[1]);
+
             command = new DeleteCommand(taskNumber);
             break;
         default:
@@ -174,7 +186,7 @@ public class Parser {
      * @return Task of corresponding line.
      * @throws DukeException If task is incomplete or invalid.
      */
-    public Task readTask(String line) throws DukeException {
+    public static Task readTask(String line) throws DukeException {
         String[] instructions = line.split("\\|", MAX_INSTRUCTION_LENGTH + 1);
         verifyInstructionLength(instructions, MAX_INSTRUCTION_LENGTH);
 
@@ -227,7 +239,7 @@ public class Parser {
      * @param instructionLength Correct length of array.
      * @throws DukeException If array length is less than correct length.
      */
-    private void verifyInstructionLength(String[] instructions, int instructionLength) throws DukeException {
+    private static void verifyInstructionLength(String[] instructions, int instructionLength) throws DukeException {
         if (instructions.length < instructionLength) {
             throw new DukeException("Missing parameter(s) for task.");
         }

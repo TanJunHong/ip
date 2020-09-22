@@ -46,7 +46,6 @@ public class Storage {
         if (Files.exists(path)) {
             try {
                 BufferedReader bufferedReader = Files.newBufferedReader(path);
-                Parser parser = new Parser();
 
                 while (true) {
                     String line = bufferedReader.readLine();
@@ -54,7 +53,7 @@ public class Storage {
                         break;
                     }
 
-                    Task task = parser.readTask(line);
+                    Task task = Parser.readTask(line);
                     tasks.add(task);
                 }
             } catch (IOException e) {

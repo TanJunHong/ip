@@ -1,6 +1,5 @@
 package duke.data.task;
 
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -31,7 +30,8 @@ public class Deadline extends Task {
      */
     @Override
     public String getFormattedTask() {
-        return LOGO + super.getFormattedTask() + " | " + getDate() + getTimeString() + System.lineSeparator();
+        return LOGO + super.getFormattedTask() + Task.INSTRUCTION_DELIMITER + getDate() + getTimeString()
+                + System.lineSeparator();
     }
 
     /**

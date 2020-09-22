@@ -31,7 +31,8 @@ public class Event extends Task {
      */
     @Override
     public String getFormattedTask() {
-        return LOGO + super.getFormattedTask() + " | " + getDate() + getTimeString() + System.lineSeparator();
+        return LOGO + super.getFormattedTask() + INSTRUCTION_DELIMITER + getDate() + getTimeString()
+                + System.lineSeparator();
     }
 
     /**
