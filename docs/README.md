@@ -3,7 +3,9 @@ Duke is a personal assistant chat bot that helps a person to keep track of vario
 
 <br>
 
-## Features 
+## Features
+
+<br>
 
 ### Adding a ToDo task : `todo`
 Adds a ToDo task to the tasks list.
@@ -17,7 +19,7 @@ Examples:
 
 <br>
 
-### Adding a Deadline task : `deadline` 
+### Adding a Deadline task : `deadline`
 Adds a Deadline task with a deadline to the tasks list.
 
 Format: `deadline TASK_DESCRIPTION /by DATE TIME`
@@ -31,7 +33,7 @@ Examples:
 
 <br>
 
-### Adding an Event task : `event` 
+### Adding an Event task : `event`
 Adds an Event task with a date/time to the tasks list.
 
 Format: `event TASK_DESCRIPTION /at DATE TIME`
@@ -45,7 +47,7 @@ Examples:
 
 <br>
 
-### Deleting a task : `delete` 
+### Deleting a task : `delete`
 Deletes a task with the corresponding task number from the tasks list.
 
 Format: `delete TASK_NUMBER`
@@ -58,7 +60,7 @@ Examples:
 
 <br>
 
-### Marking a task as done : `done` 
+### Marking a task as done : `done`
 Marks a task with the corresponding task number as done in the tasks list.
 
 Format: `done TASK_NUMBER`
@@ -71,7 +73,7 @@ Examples:
 
 <br>
 
-### Finding a task with keyword : `find` 
+### Finding a task with keyword : `find`
 Finds tasks containing the keyword from the tasks list.
 
 Format: `find KEYWORD`
@@ -83,7 +85,7 @@ Examples:
 
 <br>
 
-### Listing tasks from task list using date/time : `list` 
+### Listing tasks from task list using date/time : `list`
 List tasks matching date/time.
 
 Format: `list DATE TIME`
@@ -97,7 +99,7 @@ Examples:
 
 <br>
 
-### Exits Duke : `bye` 
+### Exits Duke : `bye`
 Exits the program.
 
 Format: `bye`
