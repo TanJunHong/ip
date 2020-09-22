@@ -5,8 +5,6 @@ Duke is a personal assistant chat bot that helps a person to keep track of vario
 
 ## Features
 
-<br>
-
 ### Adding a ToDo task : `todo`
 Adds a ToDo task to the tasks list.
 
