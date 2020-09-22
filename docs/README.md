@@ -1,6 +1,8 @@
 # User Guide
 Duke is a personal assistant chat bot that helps a person to keep track of various things.
 
+<br>
+
 ## Features 
 
 ### Adding a ToDo task : `todo`
